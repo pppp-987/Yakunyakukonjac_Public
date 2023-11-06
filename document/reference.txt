@@ -1,0 +1,192 @@
+環境構築関連
+既に git 管理しているファイルをあえて無視したい
+https://qiita.com/usamik26/items/56d0d3ba7a1300625f92
+
+Gitでリモートブランチを削除する方法
+https://www-creators.com/archives/1062
+
+空のディレクトリを維持するための、 .gitkeep と .gitignore の使い分け
+https://qiita.com/ndxbn/items/f124d2b183b60cb074e2
+
+git で .gitkeep は残したいけど、他のファイルは Ignore したい場合（ディレクトリだけ残したい場合）
+https://chidakiyo.hatenablog.com/entry/gitignore-tips1
+
+バッチファイルの作成
+https://www.javadrive.jp/command/bat/
+
+.gitignoreに記載したのに反映されない件
+https://qiita.com/fuwamaki/items/3ed021163e50beab7154
+
+
+処理関連
+Pythonで実行中のファイルの場所（パス）を取得する
+https://note.nkmk.me/python-script-file-path/
+
+Screenshot Functions (PyAutoGUIの公式ドキュメント)
+https://pyautogui.readthedocs.io/en/latest/screenshot.html
+
+Python pillowモジュールrectangleで透明度を設定する
+https://teratail.com/questions/132373
+
+【Python/PIL】縦横比を保ったまま矩形に合わせて画像をリサイズ（resize・thumnail）
+https://daeudaeu.com/pil-aspect/
+
+
+
+GUI関連
+
+PySimpleGUI User's Manual （公式ドキュメント）
+https://www.pysimplegui.org/en/latest/
+
+Python画像処理のためのGUI入門（PySimpleGUI解説）
+https://qiita.com/sunameri22/items/da002d628d7a28cd6e97
+
+[Python]PySimpleGUIでGUIプログラミング
+https://fuji-pocketbook.net/pysimplegui/
+
+【Python（PySimpleGUI）でGUIアプリ入門】ボタンを使ったアプリデモを作る
+https://knt60345blog.com/pysimpleguigui_button1/
+
+Python GUI
+http://www.dicre.com/python/gui.html
+
+PySimpleGUIでカラム要素のサイズ設定とスクロール可否を設定する
+https://serverarekore.blogspot.com/2022/01/pysimplegui_02071332490.html
+
+python PySimpleGUIでMenuBarにアプリ終了メニューを設定する
+https://mebee.info/2021/07/27/post-34645/
+
+PySimpleGUI サイズの変更
+https://note.com/hideharu092/n/n140ab2d73159
+
+
+レシピ - 折りたたみ可能なセクション (表示/非表示要素)
+https://www.pysimplegui.org/en/latest/cookbook/#recipe-collapsible-sections-visible-invisible-elements
+
+並列処理関連
+
+Window.perform_long_operation Method
+https://pysimplegui.trinket.io/demo-programs#/multi-threaded/window-perform_long_operation-method
+
+PySimpleGUI Window.perform_long_operation
+https://www.pysimplegui.org/en/latest/cookbook/#recipe-long-operations-multi-threading
+
+PySimpleGUIでマルチスレッドで内容を更新する
+https://qiita.com/mo256man/items/7902087f9943a51d4754
+
+start_thread
+https://www.pysimplegui.org/en/latest/call%20reference/#start_thread
+
+
+
+Python関連
+
+循環import問題で見える、__name__ == "__main__"の必要性
+https://qiita.com/katsuko0303/items/6e1cbf78e7fa9a2b668c
+循環importの改善に使用
+
+【globals()の使い方】文字列のクラス名からインスタンス生成する
+https://blog.suganoo.net/entry/2017/10/16/002120
+
+PyInstallerでexeファイル化したものがAVASTやAVGでトロイの木馬ウイルスと誤認される問題の一時的な解決法
+https://qiita.com/nobody_gonbe/items/5ffdd1a767c67256032e
+
+PythonでJSONファイル・文字列の読み込み・書き込み
+https://note.nkmk.me/python-json-load-dump/
+
+
+Pythonのデコレータについて
+https://qiita.com/mtb_beta/items/d257519b018b8cd0cc2e
+
+【python入門】さわっておぼえるデコレータ。中身を理解して、便利に使おう。
+https://www.yuttanpo.com/use-decorator-beginner/
+
+Pythonのデコレータで関数に処理を追加する
+https://helve-blog.com/posts/python/python-decorator/
+
+［Pythonチートシート］クラス定義編
+https://atmarkit.itmedia.co.jp/ait/articles/2001/28/news013.html
+
+Python のエラー出力
+https://qiita.com/puchi2121/items/3983a75c8c0a6e958fbd
+
+
+contents_changed
+
+
+その他
+
+
+tkinter関連
+
+【Python】tkinterを使ったGUIアプリケーションの作成方法
+https://office54.net/python/tkinter/tkinter-how-to-use
+
+【Python GUI】「tkinter」で関数実行中にウィンドウがフリーズしてしまう問題を「threading」を使って回避する方法
+https://karupoimou.hatenablog.com/entry/20200427/1587975580
+
+
+【Python（PySimpleGUI）でGUIアプリ入門】自動的に表示内容を更新するGUIアプリを作る方法
+https://knt60345blog.com/pysimplegui_auto_exe1/
+
+
+exe関連
+【Pyinstaller】+【venv】 簡単に軽量な .exeをつくる手順
+https://qiita.com/Yolyne/items/4bfd0d8215d00ed67da9
+
+Pythonをexeした際にスクリプト実行パスを取得する方法
+https://syachiku.net/python%E3%82%92exe%E3%81%97%E3%81%9F%E9%9A%9B%E3%81%AB%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E5%AE%9F%E8%A1%8C%E3%83%91%E3%82%B9%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/
+
+【pyinstaller】Pythonをexe化する方法
+https://osagoublog.com/programming/python/pyinstaller/
+
+pyinstaller 使用時のエラー: UnicodeDecodeError: 'utf-8' コーデックはバイト 0xff をデコードできません
+https://stackoverflow.com/questions/47692960/error-when-using-pyinstaller-unicodedecodeerror-utf-8-codec-cant-decode-byt
+
+
+フォント関連
+国際フォント
+https://learn.microsoft.com/ja-jp/windows/apps/design/globalizing/loc-international-fonts
+
+ISO 639-1コード一覧
+https://ja.wikipedia.org/wiki/ISO_639-1%E3%82%B3%E3%83%BC%E3%83%89%E4%B8%80%E8%A6%A7
+
+
+OCR関連
+EasyOCRとは？インストール〜文字認識の方法までわかりやすく解説
+https://camp.trainocate.co.jp/magazine/about-easyocr/
+
+EasyOCR
+https://github.com/JaidedAI/EasyOCR
+
+EasyOCR API Documentation
+https://www.jaided.ai/easyocr/documentation/
+
+文字認識エンジン「EasyOCR」
+https://izutsu.aa0.netvolante.jp/pukiwiki/?EasyOCR
+
+
+翻訳関連
+Welcome to deep_translator’s documentation!
+https://deep-translator.readthedocs.io/en/latest/index.html
+
+Pythonでdeep-translatorを用いて翻訳を行う
+https://laboratory.kazuuu.net/translation-in-python-with-deep-translator/
+
+
+キーボード関連
+【Python】キーボード、キー入力判定方法
+https://kuku81kuku81.hatenablog.com/entry/2022/06/07_python_keyinputjudgement
+
+keyboard
+https://github.com/boppreh/keyboard
+
+文字一覧 (ASCII)
+https://tools.m-bsys.com/data/charlist_ascii.php
+
+
+【python】マウスドラッグで画像から範囲指定する
+https://qiita.com/8_hisakichi_8/items/47f6d37e6f425f29c8a8
+
+Pythonのcanvasに表示した四角形を変形する
+https://water2litter.net/rum/post/python_tkinter_canvas_rectangle_modification/

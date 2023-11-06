@@ -1,0 +1,25 @@
+1. build_environment.batのダウンロード
+
+2. 開発環境作成
+    build_environment.bat の実行
+        build_environment.batがダウンロードされた場所に作成
+
+3. AWSの設定
+    venv_YakunyakuKonjac\YakunyakuKonjac_Public\tools\aws.batの実行
+
+4. アプリの実行
+    venv_YakunyakuKonjac\YakunyakuKonjac_Public\tools\app.batの実行
+
+
+履歴の削除
+    venv_YakunyakuKonjac\YakunyakuKonjac_Public\tools\delete_history.batの実行
+
+設定のリセット
+    venv_YakunyakuKonjac\YakunyakuKonjac_Public\tools\reset_setting.batの実行
+
+更新方法
+    1 . プロジェクトフォルダへの移動
+    cd \venv_YakunyakuKonjac\YakunyakuKonjac_Public
+    2 . gitからダウンロード
+    git pull origin
+

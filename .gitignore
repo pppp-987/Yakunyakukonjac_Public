@@ -1,0 +1,20 @@
+# 設定フォルダ
+src/config/setting.json
+
+# エラーログフォルダ
+src/log/error_detailed.log
+src/log/error_simple.log
+
+# 履歴フォルダ
+src/history/image_after/*
+src/history/image_before/*
+
+# ディレクトリのみ表示
+!src/history/image_after/.gitkeep
+!src/history/image_before/.gitkeep
+
+# モジュールキャッシュフォルダ
+src/package/__pycache__/*
+src/package/translation/__pycache__/*
+src/package/window/__pycache__/*
+src/package/thread/__pycache__/*

@@ -1,0 +1,11 @@
+【Python】tkinterを使ったGUIアプリケーションの作成方法
+https://office54.net/python/tkinter/tkinter-how-to-use
+
+【Python GUI】「tkinter」で関数実行中にウィンドウがフリーズしてしまう問題を「threading」を使って回避する方法
+https://karupoimou.hatenablog.com/entry/20200427/1587975580
+
+画像スクロールバーのズレの解消
+
+翻訳画像作成機能の修正
+
+設定クラスの作成
