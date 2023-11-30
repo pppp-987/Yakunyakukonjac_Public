@@ -1,0 +1,251 @@
+__init__: Columnオブジェクトを作成するコンストラクタです。レイアウト、背景色、サイズ、パディング、スクロール可能性、右クリックメニューなどのパラメータを設定できます。
+
+AddRow: 複数の要素を一度に追加するメソッドです。これにより、新しい行に要素を追加できます。
+
+Layout: コンテナ内のレイアウトを設定します。レイアウトは要素のリストのリストで指定されます。
+
+Update: 可視性を更新します。指定した場合、要素の表示/非表示状態を変更できます。
+
+ |  __init__(self, layout, background_color=None, size=(None, None), s=(None, None), size_subsample_width=1, size_subsample_height=2, pad=None, p=None, scrollable=False, vertical_scroll_only=False, right_click_menu=None, key=None, k=None, visible=True, justification=None, element_justification=None, vertical_alignment=None, grab=None, expand_x=None, expand_y=None, metadata=None, sbar_trough_color=None, sbar_background_color=None, sbar_arrow_color=None, sbar_width=None, sbar_arrow_width=None, sbar_frame_color=None, sbar_relief=None)
+ |      :param layout:                      Columnコンテナに表示されるレイアウト
+ |      :type layout:                       List[List[Element]]
+ |      :param background_color:            Column全体の背景色
+ |      :type background_color:             (str)
+ |      :param size:                        (幅、高さ) ピクセル単位のサイズ（しばしばtkinterによって1つの寸法しか設定されないことがあります。サイズを設定するのにSizer Elementを使用します）
+ |      :type size:                         (int | None, int | None)
+ |      :param s:                           sizeパラメーターと同じです。エイリアスです。どちらかが設定されている場合、設定されている方が使用されます。両方が設定されている場合、sizeが使用されます
+ |      :type s:                            (int | None, int | None)
+ |      :param size_subsample_width:        1/size_subsample * 必要なサイズに基づいてスクロール可能な列の幅を決定します。1 = コンテンツを完全に一致させる、2 = 1/2のコンテンツサイズ、3 = 1/3。必要なサイズよりも大きくするために分数を使用できます。
+ |      :type size_subsample_width:         (float)
+ |      :param size_subsample_height:       1/size_subsample * 必要なサイズに基づいてスクロール可能な高さを決定します。1 = コンテンツを完全に一致させる、2 = 1/2のコンテンツサイズ、3 = 1/3。必要なサイズよりも大きくするために分数を使用できます。
+ |      :type size_subsample_height:        (float)
+ |      :param pad:                         要素の周りに配置するパディングの量（ピクセル単位）（左/右、上/下）または（（左、右）、（上、下））またはint。intの場合、タプル（int、int）に変換されます
+ |      :type pad:                          (int, int)または（（int、int）、（int、int））または（int、（int、int））または（（int、int）、int）| int
+ |      :param p:                           padパラメーターと同じです。エイリアスです。どちらかが設定されている場合、設定されている方が使用されます。両方が設定されている場合、padが使用されます
+ |      :type p:                            (int, int)または（（int、int）、（int、int））または（int、（int、int））または（（int、int）、int）| int
+ |      :param scrollable:                  Trueの場合、列にスクロールバーが追加されます
+ |      :type scrollable:                   (bool)
+ |      :param vertical_scroll_only:        Trueの場合、水平スクロールバーは表示されません
+ |      :type vertical_scroll_only:         (bool)
+ |      :param right_click_menu:            この要素を右クリックしたときに表示されるメニューアイテムのリストのリスト。正確な形式についてはユーザードキュメントを参照してください。
+ |      :type right_click_menu:             List[List[ List[str] | str ]]
+ |      :param key:                         この要素を他のすべての要素から一意に識別する値。要素の検索や戻り値で使用されます。ウィンドウに一意である必要があります
+ |      :type key:                          str | int | tuple | object
+ |      :param k:                           Keyと同じです。kまたはkeyのどちらかを使用できます。どちらが設定されているかを使用します。
+ |      :type k:                            str | int | tuple | object
+ |      :param visible:                     要素の表示状態を設定します
+ |      :type visible:                      (bool)
+ |      :param justification:               列自体のジャスティフィケーションを設定します。列を含む行全体に影響を与えます
+ |      :type justification:                (str)
+ |      :param element_justification:       列内のすべての要素にこのジャスティフィケーションを設定します。'left'、'right'、'center'は有効な値です
+ |      :type element_justification:        (str)
+ |      :param vertical_alignment:          列を行の「top」、 「center」、 「bottom」に配置します（t、c、rも使用できます）。デフォルトでは設定なし（tkinterが決定します）
+ |      :type vertical_alignment:           (str)
+ |      :param grab:                        Trueの場合、この要素をつかんでウィンドウを移動できます。デフォルトはFalseです
+ |      :type grab:                         (bool)
+ |      :param expand_x:                    Trueの場合、列はX方向に自動的に拡大して利用可能なスペースを埋めます
+ |      :type expand_x:                     (bool)
+ |      :param expand_y:                    Trueの場合、列はY方向に自動的に拡大して利用可能なスペースを埋めます
+ |      :type expand_y:                     (bool)
+ |      :param metadata:                    任意のユーザーメタデータ
+ |      :type metadata:                     (Any)
+ |      :param sbar_trough_color:           トラフのスクロールバーの色
+ |      :type sbar_trough_color:            (str)
+ |      :param sbar_background_color:       矢印ボタンの背景と「親指」（掴んでスライドするもの）の色（マウスが上にあると矢印の色に切り替わります）
+ |      :type sbar_background_color:        (str)
+ |      :param sbar_arrow_color:            スクロールバーの矢印（ボタンのように見える）の色。マウスが上にあると背景色に切り替わります
+ |      :type sbar_arrow_color:             (str)
+ |      :param sbar_width:                  ピクセル単位のスクロールバーの幅
+ |      :type sbar_width:                   (int)
+ |      :param sbar_arrow_width:            スクロールバーの矢印の幅。スクロールバー全体の幅に影響を与える可能性があります
+ |      :type sbar_arrow_width:             (int)
+ |      :param sbar_frame_color:            スクロールバーの周りのフレームの色（一部のttkテーマでのみ利用可能）
+ |      :type sbar_frame_color:             (str)
+ |      :param sbar_relief:                 スクロールバーの「親指」（つかんでスライドするもの）のリリーフ。"RELIEF_"から始まる定数である必要があります。RELIEF_RAISED、RELIEF_SUNKEN、RELIEF_FLAT、RELIEF_RIDGE、RELIEF_GROOVE、RELIEF_SOLIDなど
+ |      :type sbar_relief:                  (str)
+
+  |  add_row(self, *args)
+ |      ユーザーにはお勧めしません。Column要素に要素の行を追加するために使用されます。
+ |
+ |      :param *args: この行の要素のリスト
+ |      :type *args:  List[Element]
+ |
+ |  contents_changed(self)
+ |      スクロール可能な列の一部のレイアウトが、要素を表示または非表示にしたり、
+ |      列のレイアウトが拡張されたりすることによって変更された場合、新しいスクロールエリアが
+ |      新しいコンテンツに一致するように計算されるため、このメソッドを呼び出す必要があります。
+ |
+ |  layout(self, rows)
+ |      Window.Layoutメソッドのように使用できますが、作成時にlayoutパラメーターを使用する方が良いです。
+ |
+ |      :param rows: 要素の行
+ |      :type rows:  List[List[Element]]
+ |      :return:     チェーンのために使用
+ |      :rtype:      (Column)
+ |
+ |  update(self, visible=None)
+ |      Column要素のいくつかの設定を変更します。事前に`Window.Read`または`Window.Finalize`を呼び出す必要があります。
+ |
+ |      変更は、window.readまたはwindow.refreshを呼び出すまでウィンドウには表示されません。
+ |
+ |      可視性を変更すると、要素が移動する場合があります。それを固定位置に保ちたい場合は、要素が表示されるとその場所に戻るようにするための「レイアウトヘルパー」関数「pin」を使用して、要素が「ピン留め」されることを確認してください。
+ |
+ |      :param visible: 要素の可視性を制御します
+ |      :type visible:  (bool)
+
+ |  ----------------------------------------------------------------------
+ |  Readonly properties inherited from Element:
+ |
+ |  key
+ |      要素のキーを返します。これは読み取り専用のプロパティです。
+ |      キーはハッシュ可能なオブジェクトである必要があります（基本的にはリストを除くすべてのもの...タプルは大丈夫ですが、リストはダメです）
+ |      :return: ウィンドウのキー
+ |      :rtype:  (Any)
+ |
+ |  visible
+ |      要素の表示状態を返します。これは読み取り専用のプロパティです。
+ |      :return: 要素の表示状態
+ |      :rtype:  (bool)
+ |
+ |  widget
+ |      要素のtkinterウィジェットを返します。これは読み取り専用のプロパティです。
+ |      実装では、ウィジェットメンバー変数が返されます。これは後方互換性のある追加です
+ |      :return: 要素の基本的なtkinterウィジェット
+ |      :rtype:  (tkinter.Widget)
+ |  __dict__
+ |      インスタンス変数用の辞書（定義されている場合）
+ |
+ |  __weakref__
+ |      オブジェクトへの弱参照のリスト（定義されている場合）
+ |
+ |  metadata
+ |      メタデータは、いつでも任意の値を保持するために使用できる要素プロパティです
+ |      :return: 現在のメタデータ値
+ |      :rtype:  (Any)
+
+
+|  SetFocus = set_focus(self, force=False)
+|      フォーカスを設定するメソッド。forceがTrueの場合、focus_forceを呼び出します。それ以外の場合はfocus_setを呼び出します。
+|
+|  SetTooltip = set_tooltip(self, tooltip_text)
+|      要素のツールチップテキストを変更するためのメソッド。通常、要素オブジェクトを使用して呼び出されます。例：window.Element('key').SetToolTip('新しいツールチップ')。
+
+|  __call__(self, *args, **kwargs)
+|      既存の要素を「呼び出す」ことができるようにするメソッド。呼び出すと、実際に要素のUpdateメソッドが呼び出されます。
+|      例：このテキスト要素がレイアウトにある場合：
+|      sg.Text('foo', key='T')
+|      それを呼び出して要素のUpdateメソッドを呼び出すことができます：
+|      window.find_element('T')('新しいテキスト値')
+
+|  bind(self, bind_string, key_modifier, propagate=True)
+|      要素にtkinterのイベントを追加するために使用されるメソッド。tkinter固有のデータは要素のuser_bind_eventメンバ変数に格納されます。
+|      :param bind_string: tkinterのbind関数で期待される文字列
+|      :type bind_string: (str)
+|      :param key_modifier: イベントが返されるときに要素のキーに追加される追加データ
+|      :type key_modifier: (str)
+|      :param propagate: Trueの場合、tkinterにイベントを伝えるように指示されます
+|      :type propagate: (bool)
+
+|  block_focus(self, block=True)
+|      キーボードを使用してフォーカスを取得する要素を有効または無効にします。
+|      blockパラメータがTrueの場合、この要素はキーボードを使用して他の要素からフォーカスを受け取りません。
+|      要素をクリックして使用することはできます。
+|      :param block: Trueの場合、キーボードを使用して要素はフォーカスを受け取りません
+|      :type block: bool
+
+|  expand(self, expand_x=False, expand_y=False, expand_row=True)
+|      要素をX方向およびY方向に利用可能なスペースを埋めるように拡張させるメソッド。どちらまたは両方の方向を指定できます。
+|      :param expand_x: Trueの場合、要素は水平方向に拡張します
+|      :type expand_x: (bool)
+|      :param expand_y: Trueの場合、要素は垂直方向に拡張します
+|      :type expand_y: (bool)
+|      :param expand_row: Trueの場合、要素を含む行も拡張されます。これがないと、要素は行内に「閉じ込められ」ます
+|      :type expand_row: (bool)
+
+|  get_next_focus(self)
+|      この要素の後にフォーカスを受け取るべき次の要素を取得します。
+|      :return: この要素の後にフォーカスを受け取る要素
+|      :rtype: (Element)
+
+|  get_previous_focus(self)
+|      この要素の前にフォーカスを受け取るべき要素を取得します。
+|      :return: この要素の前にフォーカスを受け取るべき要素
+|      :rtype: (Element)
+
+|  get_size(self)
+|      要素のサイズをピクセル単位で返します。一部の要素はサイズを指定するために文字を使用しますが、このget_sizeメソッドを呼び出すとピクセルが返されます。
+|      :return: 要素の幅と高さ
+|      :rtype: (int, int)
+
+|  grab_anywhere_exclude(self)
+|      この要素をgrab_anywhere機能で使用しないように除外します。
+|      ドラッグが有効な要素（例：グラフ要素）の場合、ウィンドウのドラッグではなく、グラフ要素にドラッグイベントを送信するようにしたい場合に便利です。
+
+|  grab_anywhere_include(self)
+|      この要素をgrab_anywhere機能に含めます。
+|      これにより、Multline要素がウィンドウをドラッグできるようになります
+
+|  hide_row(self)
+|      要素が配置されている行全体を非表示にします。
+|      要素を非表示にする場合、行コンテナを含めてすべてのスペースを削除する必要がある場合に使用します
+
+|  set_cursor(self, cursor=None, cursor_color=None)
+|      現在の要素にカーソルを設定します。
+|      "カーソル"はこの呼び出しで2つの異なる方法で使用されます。
+|      パラメータの "cursor" では実際のマウスポインタが指定されます。
+|      マウスポインタを表示したくない場合は、文字列 "none" を使用します。
+|      パラメータの "cursor_color" では、入力要素に入力するときに使用されるビームの色です。
+
+|  set_focus(self, force=False)
+|      現在のフォーカスをこの要素に設定します
+
+|  set_right_click_menu(self, menu=None)
+
+|  set_size(self, size=(None, None))
+|      要素のサイズを特定のサイズに変更します。
+|      1つのサイズだけを指定して、要素の寸法のうちの1つだけを変更することができます。
+
+|  set_tooltip(self, tooltip_text)
+|      アプリケーションが要素のツールチップテキストを変更するためのメソッド。通常、要素オブジェクトを使用して呼び出されます。例：window.Element('key').SetToolTip('新しいヒント')。
+
+|  set_vscroll_position(self, percent_from_top)
+|      要素のウィジェットの垂直スクロール位置を設定しようとします。
+|      :param percent_from_top: 0から1.0まで、スクロールバーを移動するための上部からのパーセンテージ
+|      :type percent_from_top: (float)
+
+|  unbind(self, bind_string)
+|      要素から以前にバインドされたtkinterイベントを削除します。
+|      :param bind_string: tkinterのbind関数で期待される文字列
+|      :type bind_string: (str)
+
+|  unhide_row(self)
+|      要素が配置されている行コンテナを再表示します。
+|      行はおそらくウィンドウ/コンテナの底に再表示されます。
+
+|  key
+|      要素のキーを返します。これは読み取り専用のプロパティです。
+|      キーはハッシュ可能なオブジェクトである必要があります（リスト以外の基本的には何でも、タプルはOKですが、リストはNGです）。
+|      :return: ウィンドウのキー
+|      :rtype:  (Any)
+
+|  visible
+|      要素の可視性状態を返します。これは読み取り専用のプロパティです。
+|      :return: 要素の可視性状態
+|      :rtype:  (bool)
+
+|  widget
+|      要素のtkinterウィジェットを返します。これは読み取り専用のプロパティです。
+|      実装はWidgetメンバ変数が返される方式です。これは後方互換性のある追加機能です。
+|      :return: 要素の基礎となるtkinterウィジェット
+|      :rtype:  (tkinter.Widget)
+
+|  __dict__
+|      インスタンス変数の辞書（定義されている場合）
+
+|  __weakref__
+|      オブジェクトへの弱い参照のリスト（定義されている場合）
+
+|  metadata
+|      metadataは要素のプロパティで、いつでも任意の値を保持するために使用できます
+|      :return: 現在のmetadataの値
+|      :rtype:  (Any)

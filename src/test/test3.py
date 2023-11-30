@@ -1,42 +1,19 @@
 import PySimpleGUI as sg
 
-import traceback
+# ウィンドウのレイアウトを設定
+layout = [
+    [sg.Text("リサイズイベントをテストする"), sg.Button("OK")],
+    [sg.pin(sg.Text("", size=(1, 1), key="-RESIZE-"))],  # リサイズイベントをトリガーするためのピン留めされたText要素
+]
 
+# ウィンドウを作成し、リサイズ可能に設定
+window = sg.Window("ウィンドウリサイズイベントテスト", layout, resizable=True, finalize=True)
 
-def error_popup(e, is_output_error_log):
-    """エラー発生ポップアップの作成
+while True:
+    event, values = window.read()
+    if event == sg.WIN_CLOSED or event == "OK":
+        break
+    elif event == "-RESIZE-":  # ピン留めされた要素が生成するイベント
+        print("ウィンドウがリサイズされました。")
 
-    Args:
-        e (Exception): 例外
-        is_output_error_log(bool): エラーログの出力に成功したかどうか
-    """
-    # メッセージの作成
-    # エラーログファイルの出力に成功したなら
-    if is_output_error_log:
-        message = [
-            "申し訳ありません、エラーが発生しました。",
-            f"エラーメッセージ: {str(e)}",
-            "エラーログファイルが作成されました。",
-            "管理者にこのファイルを提供していただけると幸いです。",
-        ]
-    # エラーログファイルの出力に失敗したなら
-    else:
-        message = [
-            "申し訳ありません、エラーが発生しました。",
-            f"エラーメッセージ: {str(e)}",
-            "エラーログファイルの作成に失敗しました。",
-            "管理者に問題を報告していただけると幸いです。",
-        ]
-    # ポップアップの作成
-    sg.popup("\n".join(message))
-
-
-import traceback
-import inspect
-
-
-try:
-    # ここで何らかの例外を発生させるためのサンプルコード
-    x = 1 / 0
-except Exception as e:
-    error_popup(e, True)
+window.close()

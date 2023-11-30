@@ -1,7 +1,18 @@
-@REM 險ｭ螳壹ヵ繧｡繧､繝ｫ蜑企勁
-del ..\src\config\setting.json
+@REM ファイル保存時に、エンコーディングを"Shift-JIS"にする
 
-@REM 繧ｨ繝ｩ繝ｼ繝ｭ繧ｰ繝輔ぃ繧､繝ｫ蜑企勁
-del ..\src\log\error_detailed.log
-del ..\src\log\error_simple.log
-pause
+@REM コマンドを表示しない
+@echo off
+
+@REM 文字コードを"Shift-JIS"に設定 メッセージは非表示
+chcp 932 >nul
+
+@REM 仮想環境が有効でないなら
+if not defined VIRTUAL_ENV (
+    @REM 仮想環境のルートディレクトリへ移動
+    cd ../..
+    @REM 仮想環境の有効化
+    call Scripts\activate.bat
+)
+
+@REM 設定ファイル削除
+del YakunyakuKonjac_Public\src\config\setting.json 2>nul

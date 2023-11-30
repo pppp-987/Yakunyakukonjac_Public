@@ -1,7 +1,8 @@
-import pyautogui  # スクショ撮影
+import os
 
-from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
+import pyautogui  # スクショ撮影
 from package.system_setting import SystemSetting  # ユーザーが変更不可能の設定クラス
+from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
 
 
 class ScreenshotCapture:
@@ -19,12 +20,8 @@ class ScreenshotCapture:
         ss_region = [
             user_setting.get_setting("ss_left_x"),  # SS範囲の左側x座標
             user_setting.get_setting("ss_top_y"),  # SS範囲の上側y座標
-            abs(
-                user_setting.get_setting("ss_right_x") - user_setting.get_setting("ss_left_x")
-            ),  # SS範囲の横幅
-            abs(
-                user_setting.get_setting("ss_bottom_y") - user_setting.get_setting("ss_top_y")
-            ),  # SS範囲の縦幅
+            abs(user_setting.get_setting("ss_right_x") - user_setting.get_setting("ss_left_x")),  # SS範囲の横幅
+            abs(user_setting.get_setting("ss_bottom_y") - user_setting.get_setting("ss_top_y")),  # SS範囲の縦幅
         ]
 
         screenshot_image = pyautogui.screenshot(region=ss_region)  # スクショ撮影
@@ -40,7 +37,7 @@ class ScreenshotCapture:
             ss_file_path(str): スクショ画像のファイルパス
         """
         directory_path = SystemSetting.image_before_directory_path  # 翻訳前画像のディレクトリパス
-        ss_file_path = directory_path + file_name  # ファイルパス(絶対参照)
+        ss_file_path = os.path.join(directory_path, file_name)  # ファイルパス(絶対参照)
         screenshot_image.save(ss_file_path)  # 翻訳前画像保存
 
         return ss_file_path  # 翻訳前画像ファイルパス

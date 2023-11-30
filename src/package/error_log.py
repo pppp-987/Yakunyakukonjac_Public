@@ -1,12 +1,13 @@
-import os  # オペレーティングシステム関連
-import sys  # システム関連の機能を提供
-import logging  # ログの機能を提供
-import traceback  # 例外情報の取得と表示
 import inspect  # 関数やクラスの情報を取得
+import logging  # ログの機能を提供
+import os  # オペレーティングシステム関連
 import platform  # プラットフォーム情報の取得
-import PySimpleGUI as sg  # GUI
+import sys  # システム関連の機能を提供
 import threading  # スレッド関連
+import traceback  # 例外情報の取得と表示
 
+import PySimpleGUI as sg  # GUI
+from package.global_status import GlobalStatus  # グローバル変数保存用のクラス
 from package.system_setting import SystemSetting  # ユーザーが変更不可能の設定クラス
 
 
@@ -23,9 +24,7 @@ class ErrorLog:
         self.simple_logger.setLevel(logging.DEBUG)
 
         # 基本情報用のロガーの出力フォーマットを設定
-        simple_formatter = logging.Formatter(
-            "%(asctime)s [%(levelname)s] - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
-        )
+        simple_formatter = logging.Formatter("%(asctime)s [%(levelname)s] - %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
         # ログファイルパスの取得
         simple_log_file_path = SystemSetting.simple_error_log_file_path
@@ -99,108 +98,92 @@ class ErrorLog:
                 self.detailed_logger.error("Variable [%s]: %s", var_name, var_value)
 
     @staticmethod  # スタティック(静的)メソッドの定義
-    def create_error_log(window=None):
-        """ErrorLogのインスタンス化を行う関数
-
-        Args:
-            window (sg.Window, None): ポップアップイベントを返すWindowオブジェクト
-        """
+    def create_error_log():
+        """ErrorLogのインスタンス化を行う関数"""
         try:
             return ErrorLog()
         except Exception as e:
             print("Failed to create ErrorLog:", e)
             # エラー発生ポップアップの作成
-            ErrorLog.error_popup(e, is_output_error_log=False, window=window)
+            ErrorLog.error_popup(
+                e,
+                is_output_error_log=False,
+            )
             raise  # 例外を発生させる
 
     @staticmethod  # スタティック(静的)メソッドの定義
-    def output_error_log(error_log_instance, e, window=None):
+    def output_error_log(error_log_instance, e):
         """エラーログの出力を行う関数
 
         Args:
             error_log_instance (RrrorLog): エラーログに関するクラスのインスタンス
             e (Exception): 例外
-            window (sg.Window, None): ポップアップイベントを返すWindowオブジェクト
         """
         try:
+            # エラーログの出力
             error_log_instance.self_output_error_log()
-
             # エラー発生ポップアップの作成
-            ErrorLog.error_popup(e, is_output_error_log=True, window=window)
+            ErrorLog.error_popup(
+                e,
+                is_output_error_log=True,
+            )
         # エラーログの出力に失敗したなら
         except Exception as e:
             print("Failed to output ErrorLog:", e)
             # エラー発生ポップアップの作成
-            ErrorLog.error_popup(e, is_output_error_log=False, window=window)
+            ErrorLog.error_popup(e, is_output_error_log=False)
         raise  # 例外を発生させる
 
     @staticmethod  # スタティック(静的)メソッドの定義
-    def error_popup(e, is_output_error_log, window=None):
+    def error_popup(e, is_output_error_log):
         """エラー発生ポップアップの作成
 
         Args:
             e (Exception): 例外
             is_output_error_log(bool): エラーログの出力に成功したかどうか
-            window (sg.Window, None): ポップアップイベントを返すWindowオブジェクト
         """
         # メッセージの作成
         # エラーログファイルの出力に成功したなら
         if is_output_error_log:
             message = [
                 "申し訳ありません、エラーが発生しました。",
-                f"エラーメッセージ: {str(e)}",
                 "エラーログファイルが作成されました。",
                 "管理者にこのファイルを提供していただけると幸いです。",
+                "エラーメッセージ:",
+                f"  {e}",
             ]
         # エラーログファイルの出力に失敗したなら
         else:
             message = [
                 "申し訳ありません、エラーが発生しました。",
-                f"エラーメッセージ: {str(e)}",
                 "エラーログファイルの作成に失敗しました。",
                 "管理者に問題を報告していただけると幸いです。",
+                "エラーメッセージ:",
+                f"  {e}",
             ]
 
-        # ポップアップイベントを返すWindowオブジェクトが存在しないなら
-        if window is None:
+        # 現在のスレッドがメインスレッドかどうか
+        is_main_thread = threading.current_thread() == threading.main_thread()
+        # 現在のスレッドがメインスレッドなら
+        if is_main_thread:
             # エラーポップアップの作成
             sg.popup("\n".join(message))
+
+        # 現在のスレッドがメインスレッドでないなら
         else:
-            print("ポップアップ表示")
-            # スレッドから、キーイベントを送信
-            window.write_event_value(key="-thread_error_event-", value=message)
+            # サブスレッドでエラーが発生したかどうか
+            GlobalStatus.is_sub_thread_error = True
+            # サブスレッドでエラー発生時の表示エラーメッセージ
+            GlobalStatus.sub_thread_error_message = message
 
-    # @staticmethod  # スタティック(静的)メソッドの定義
-    # def parameter_decorator(is_main_thread, event_window=None):  # デコレータの引数を取得する関数の宣言
-    #     """デコレータの引数を取得する関数
-
-    #     Args:
-    #         is_main_thread (bool): メインスレッドかどうか
-    #         window (sg.Window, None): ポップアップイベントを返すWindowオブジェクト
-    #     """
-
-    #     def decorator(func):  # デコレータ関数の宣言。
-    #         """デコレータ関数。このデコレータを使用した関数は、'wrapper'関数に置き換えられる。
-
-    #         Args:
-    #             func (func): デコレートされる関数
-    #         """
-
-    #         def wrapper(*args, **kwargs):
-    #             """デコレータの内部関数。任意の位置引数(*args)とキーワード引数(**kwargs)を受け取る。"""
-    #             try:
-    #                 # エラーログ作成
-    #                 error_log = ErrorLog.create_error_log()
-    #                 # 元の関数実行前の処理
-    #                 func(*args, **kwargs)  # 元々のデコレートされる関数を実行
-    #             # エラー発生時
-    #             except Exception as e:
-    #                 # エラーログの出力処理
-    #                 ErrorLog.output_error_log(error_log, e, window)
-
-    #         return wrapper  # デコレータの内部関数を返す。
-
-    #     return decorator  # デコレータ関数を返す。
+            # 現在開いているウィンドウクラスのインスタンスでウィンドウオブジェクトが作成されているかどうか
+            if hasattr(GlobalStatus.win_instance, "window"):
+                # ウィンドウオブジェクトの取得
+                window = GlobalStatus.win_instance.window
+                # ウィンドウが閉じられていないなら
+                if not window.was_closed():
+                    # スレッドから、キーイベントを送信
+                    window.write_event_value(key="-thread_error_event-", value=message)
 
     @staticmethod  # スタティック(静的)メソッドの定義
     def decorator(func):  # デコレータ関数の宣言。
@@ -213,28 +196,13 @@ class ErrorLog:
         def wrapper(*args, **kwargs):
             """デコレータの内部関数。任意の位置引数(*args)とキーワード引数(**kwargs)を受け取る。"""
             try:
-                # 現在のスレッドがメインスレッドかどうか
-                is_main_thread = threading.current_thread() == threading.main_thread()
-                # 現在のスレッドがメインスレッドなら
-                if is_main_thread:
-                    # ポップアップイベントを返すWindowオブジェクト
-                    window = None
-                # 現在のスレッドがサブスレッドなら
-                else:
-                    # ポップアップイベントを返すWindowオブジェクトが指定されているなら
-                    if "window" in kwargs:
-                        window = kwargs["window"]
-                    # ポップアップイベントを返すWindowオブジェクトが指定されていないなら
-                    else:
-                        window = None
-
                 # エラーログ作成
-                error_log = ErrorLog.create_error_log(window)
+                error_log = ErrorLog.create_error_log()
                 # 元の関数実行前の処理
                 func(*args, **kwargs)  # 元々のデコレートされる関数を実行
             # エラー発生時
             except Exception as e:
                 # エラーログの出力処理
-                ErrorLog.output_error_log(error_log, e, window)
+                ErrorLog.output_error_log(error_log, e)
 
         return wrapper  # デコレータの内部関数を返す。

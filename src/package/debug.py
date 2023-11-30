@@ -1,3 +1,11 @@
+import os  # オペレーティングシステム関連
+import sys  # システム関連
+
+#! デバッグ用
+if __name__ == "__main__":
+    src_path = os.path.join(os.path.dirname(__file__), "..")  # パッケージディレクトリパス
+    sys.path.append(src_path)  # モジュール検索パスを追加
+
 from package.system_setting import SystemSetting  # ユーザーが変更不可の設定クラス
 
 
@@ -5,10 +13,10 @@ class Debug:
     """デバッグ用クラス"""
 
     # デバッグ用ディレクトリパス
-    debug_directory_path = SystemSetting.package_path + "../debug_history/"
+    debug_directory_path = SystemSetting.debug_directory_path
 
     # 翻訳前画像パス
-    ss_file_path = debug_directory_path + "/image_before.png"
+    ss_file_path = os.path.join(debug_directory_path, "image_before.png")
 
     # 翻訳前テキストリスト
     text_before_list = [
@@ -53,4 +61,70 @@ class Debug:
     ]
 
     # 翻訳後画像パス
-    overlay_translation_image_path = debug_directory_path + "/image_after.png"
+    overlay_translation_image_path = os.path.join(debug_directory_path, "image_after.png")
+
+    def create_text_image(size, text, font_path, font_size, image_save_path):
+        """テキストを描画した画像を作成、保存する処理
+
+        Args:
+            size (Tuple[int, int]): 画像のサイズを指定するタプル
+                - width (int): 画像の幅
+                - height (int): 画像の高さ
+            text (str): 描画するテキスト
+            font_path (str): フォントパス
+            font_size (int): フォントサイズ
+            image_save_path (str): 作成された画像を保存するパス
+        """
+
+        width, height = size  # 画像のサイズ
+        background_color = "#FFF"  # 背景色
+
+        # 新しい画像を作成
+        image = Image.new("RGB", (width, height), background_color)
+        # 画像に図形やテキストを描画するオブジェクトの作成
+        draw = ImageDraw.Draw(image)
+
+        # フォントの設定
+        font_color = "#000"
+        font_image = ImageFont.truetype(font_path, font_size)
+
+        # テキストを描画する領域サイズの取得
+        text_bbox = draw.textbbox((0, 0), text, font_image)
+        text_width = text_bbox[2] - text_bbox[0]
+        text_height = text_bbox[3] - text_bbox[1]
+
+        # テキスト位置の計算
+        text_x = (width - text_width) / 2
+        text_y = (height - text_height) / 2
+
+        # テキストの描画
+        draw.text((text_x, text_y), text, fill=font_color, font=font_image)
+
+        # 画像の保存
+        image.save(image_save_path)
+
+        # 画像の表示
+        # image.show()
+
+
+# ! デバッグ用
+if __name__ == "__main__":
+    # 翻訳されたテキストを日本語で表示するためにフォントとサイズを指定
+    from PIL import Image, ImageDraw, ImageFont
+
+    # OCRで動作チェックに使用する画像を画像を作成、保存
+    Debug.create_text_image(
+        size=(256, 144),
+        text="Hello world",
+        font_path=SystemSetting.font_Segoe_path,  # 欧文フォント
+        font_size=40,
+        image_save_path=SystemSetting.check_ocr_image_path,  # OCRの動作チェックに使用する画像ファイルの保存場所
+    )
+    # OCRで動作チェックに使用する画像を画像を作成、保存
+    Debug.create_text_image(
+        size=(256, 144),
+        text="No history found",
+        font_path=SystemSetting.font_Segoe_path,  # 欧文フォント
+        font_size=30,
+        image_save_path=SystemSetting.default_image_before_path,  # デフォルトの翻訳前画像ファイル
+    )

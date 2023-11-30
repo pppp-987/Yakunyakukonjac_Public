@@ -1,0 +1,55 @@
+class Image(Element)
+ |  Image(source=None, filename=None, data=None, background_color=None, size=(None, None), s=(None, None), pad=None, p=None, key=None, k=None, tooltip=None, subsample=None, zoom=None, right_click_menu=None, expand_x=False, expand_y=False, visible=True, enable_events=False, metadata=None)
+ |
+ |  イメージ要素 - ウィンドウに画像を表示します。GIFまたはPNGのみサポートしています。
+ |
+ |  メソッド解決順序：
+ |      Image
+ |      Element
+ |      builtins.object
+ |
+ |  ここで定義されているメソッド：
+ |
+ |  Update = update(self, source=None, filename=None, data=None, size=(None, None), subsample=None, zoom=None, visible=None)
+ |
+ |  UpdateAnimation = update_animation(self, source, time_between_frames=0)
+ |
+ |  __init__(self, source=None, filename=None, data=None, background_color=None, size=(None, None), s=(None, None), pad=None, p=None, key=None, k=None, tooltip=None, subsample=None, zoom=None, right_click_menu=None, expand_x=False, expand_y=False, visible=True, enable_events=False, metadata=None)
+ |      :param source:           ファイル名またはBase64バイト。タイプを自動検出し、ファイル名またはデータを自動的に埋め込みます。
+ |      :type source:            str | bytes | None
+ |      :param filename:         ボタン画像がある場合の画像ファイル名。GIFおよびPNGのみ対応しています。
+ |      :type filename:          str | None
+ |      :param data:             ボタンに表示する画像の生のBase64表現または文字列。ファイル名またはデータのどちらかを選択します。
+ |      :type data:              bytes | str | None
+ |      :param background_color: 背景の色
+ |      :type background_color:   (str)
+ |      :param size:             画像のサイズ（幅、高さ）（ピクセル単位）
+ |      :type size:              (int, int)
+ |      :param s:                サイズパラメーターと同じです。エイリアスです。どちらか一方が設定されている場合、設定されている方が使用されます。両方設定されている場合、サイズが使用されます。
+ |      :type s:                 (int, int) | (None, None) | int
+ |      :param pad:              要素の周りに配置する余白の量（左/右、上/下）（ピクセル単位）または（（左、右）、（上、下））またはint。intの場合、タプル（int、int）に変換されます。
+ |      :type pad:               (int, int)または（（int、int）、（int、int））または（int、（int、int））または（（int、int）、int）| int
+ |      :param p:                padパラメーターと同じです。エイリアスです。どちらか一方が設定されている場合、設定されている方が使用されます。両方設定されている場合、padが使用されます。
+ |      :type p:                 (int, int)または（（int、int）、（int、int））または（int、（int、int））または（（int、int）、int）| int
+ |      :param key:              要素を一意に識別するためのキー。window.find_elementおよび戻り値と一緒に使用されます。
+ |      :type key:               str | int | tuple | object
+ |      :param k:                キーと同じです。kまたはkeyのいずれかを使用できます。どちらかが設定されている場合、設定されている方が使用されます。
+ |      :type k:                 str | int | tuple | object
+ |      :param tooltip:          要素の上にマウスを重ねると表示されるテキスト
+ |      :type tooltip:           (str)
+ |      :param subsample:        画像のサイズを縮小する量。サイズをこの数値で割ります。2=1/2、3=1/3、4=1/4、など
+ |      :type subsample:         (int)
+ |      :param zoom:             画像のサイズを拡大する量。
+ |      :type zoom:              (int)
+ |      :param right_click_menu: この要素を右クリックしたときに表示されるメニュー項目のリスト。正確なフォーマットについてはユーザードキュメントを参照してください。
+ |      :type right_click_menu:  List[List[ List[str] | str ]]
+ |      :param expand_x:         要素がX方向に自動的に拡張して利用可能なスペースを埋める場合はTrue
+ |      :type expand_x:          (bool)
+ |      :param expand_y:         要素がY方向に自動的に拡張して利用可能なスペースを埋める場合はTrue
+ |      :type expand_y:          (bool)
+ |      :param visible:          要素の表示状態を設定します
+ |      :type visible:           (bool)
+ |      :param enable_events:    要素固有のイベントをオンにします。Image要素の場合、イベントは「イメージがクリックされた」です。
+ |      :type enable_events:     (bool)
+ |      :param metadata:         任意の値を設定できるユーザーメタデータ
+ |      :type metadata:          (Any)

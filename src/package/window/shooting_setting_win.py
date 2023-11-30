@@ -1,21 +1,22 @@
-# ! デバッグ用
-import sys  # システム関連
 import os  # ディレクトリ関連
-
-if __name__ == "__main__":
-    src_path = os.path.dirname(__file__) + "\..\.."  # パッケージディレクトリパス
-    sys.path.append(src_path)  # モジュール検索パスを追加
-    print(src_path)
+import sys  # システム関連
+import threading  # スレッド関連
 
 import PySimpleGUI as sg  # GUI
+
+#! デバッグ用
+if __name__ == "__main__":
+    src_path = os.path.join(os.path.dirname(__file__), "..", "..")  # パッケージディレクトリパス
+    sys.path.append(src_path)  # モジュール検索パスを追加
+
 import pyautogui as pag  # マウスやキーボードを操作
-
+import PySimpleGUI as sg  # GUI
 from package.fn import Fn  # 自作関数クラス
-from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
+from package.global_status import GlobalStatus  # グローバル変数保存用のクラス
 from package.system_setting import SystemSetting  # ユーザーが変更不可の設定クラス
-from package.window.base_win import BaseWin  # ウィンドウの基本クラス
-
 from package.thread.get_drag_area_thread import GetDragAreaThread  # ドラッグした領域の座標を取得するスレッド
+from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
+from package.window.base_win import BaseWin  # ウィンドウの基本クラス
 
 
 class ShootingSettingWin(BaseWin):
@@ -30,7 +31,6 @@ class ShootingSettingWin(BaseWin):
         # 継承元のコンストラクタを呼び出す
         super().__init__()
         # todo 初期設定
-        self.window_title = "表示設定画面"  # ウィンドウタイトル
         # 撮影範囲の座標情報の辞書
         self.ss_region_info_dict = {
             "left": {
@@ -71,7 +71,7 @@ class ShootingSettingWin(BaseWin):
         ss_region_text = ""
         # 撮影範囲情報取得
         for ss_region_info in self.ss_region_info_dict.values():
-            ss_region_text += ss_region_info["text"] + " : " + str(ss_region_info["value"]) + "\n"
+            ss_region_text += f"{ss_region_info['text']} : {ss_region_info['value']}\n"
 
         # 末尾の改行を削除
         ss_region_text = ss_region_text.rstrip("\n")
@@ -87,15 +87,11 @@ class ShootingSettingWin(BaseWin):
                                 key="-translation_interval_sec-",
                                 size=(6, 1),
                                 # デフォルト
-                                default_text=self.user_setting.get_setting(
-                                    "translation_interval_sec"
-                                ),
+                                default_text=self.user_setting.get_setting("translation_interval_sec"),
                                 enable_events=True,  # イベントを取得する
                                 metadata={
                                     # 前回の値の保存
-                                    "before_input_value": self.user_setting.get_setting(
-                                        "translation_interval_sec"
-                                    ),
+                                    "before_input_value": self.user_setting.get_setting("translation_interval_sec"),
                                     "min_value": 1,  # 入力範囲の最小値
                                     "max_value": 3600,  # 入力範囲の最大値
                                     "message_key": "-translation_interval_sec_message-",  # メッセージテキストの識別子
@@ -147,23 +143,24 @@ class ShootingSettingWin(BaseWin):
             event, values = self.window.read()
 
             # ! デバッグログ
-            if event != "__TIMEOUT__":
-                Fn.time_log(event, values)
+            # if event != "__TIMEOUT__":
+            #     Fn.time_log(event, values)
 
-            # プログラム終了イベント処理
-            if event == "-WINDOW CLOSE ATTEMPTED-":  # 閉じるボタン押下,Alt+F4イベントが発生したら
-                self.window_close()  # プログラム終了イベント処理
+            # 共通イベントの処理が発生したら
+            if self.base_event(event, values):
+                continue
 
             # 確定ボタン押下イベント
             elif event == "-confirm-":
-                update_setting = values  # 更新する設定
                 update_setting = self.get_update_setting(values)  # 更新する設定の取得
                 self.user_setting.save_setting_file(update_setting)  # 設定をjsonファイルに保存
+                # 翻訳画面に遷移する処理
+                self.transition_to_translation_win()
 
-            # 確定ボタン押下イベント
+            # 戻るボタン押下イベント
             elif event == "-back-":
-                self.transition_target_win = "TranslationWin"  # 遷移先ウィンドウ名
-                self.window_close()  # プログラム終了イベント処理
+                # 翻訳画面に遷移する処理
+                self.transition_to_translation_win()
 
             # 撮影範囲設定ボタン押下イベント
             elif event == "-set_ss_region-":
@@ -185,7 +182,7 @@ class ShootingSettingWin(BaseWin):
         ss_region_text = ""
         # 撮影範囲情報取得
         for ss_region_info in self.ss_region_info_dict.values():
-            ss_region_text += ss_region_info["text"] + " : " + str(ss_region_info["value"]) + "\n"
+            ss_region_text += f"{ss_region_info['text']} : {ss_region_info['value']}\n"
 
         # 末尾の改行を削除
         ss_region_text = ss_region_text.rstrip("\n")
@@ -193,17 +190,45 @@ class ShootingSettingWin(BaseWin):
 
     def set_ss_region_event(self):
         """撮影範囲設定ボタン押下イベント処理"""
-        # ドラッグした領域の座標を取得する
-        GetDragAreaThread.run(self.window)
+        # ドラッグした領域の座標を取得するスレッド作成
+        thread = threading.Thread(
+            # スレッド名
+            name="撮影範囲設定スレッド",
+            # スレッドで実行するメソッド
+            target=lambda: GetDragAreaThread.run(),
+            daemon=True,  # メインスレッド終了時に終了する
+        )
+        # スレッド開始
+        thread.start()
 
-        # 撮影範囲の座標情報の更新
-        for region_key in ["left", "top", "right", "bottom"]:
-            self.ss_region_info_dict[region_key]["value"] = GetDragAreaThread.region[region_key]
+        # メインスレッドが実行中かどうか
+        GlobalStatus.is_main_thread_running = False
 
-        # 撮影範囲表示テキストの取得
-        ss_region_text = self.get_ss_region_text()
-        # 撮影範囲表示テキストの更新
-        self.window["-ss_region_text-"].update(value=ss_region_text)
+        # 0.5秒ごとにスレッドでエラーが発生したかどうかをチェックする
+        # スレッドが存在するかつ、サブスレッドでエラーが発生していないなら
+        while thread.is_alive() and not GlobalStatus.is_sub_thread_error:
+            # スレッドが終了するまで停止(最大0.5秒)
+            thread.join(timeout=0.5)
+
+        # サブスレッドでエラーが発生しなかったら
+        if not GlobalStatus.is_sub_thread_error:
+            # メインスレッドが実行中かどうか
+            GlobalStatus.is_main_thread_running = True
+
+            # 撮影範囲がドラッグ選択されたなら
+            if GetDragAreaThread.region is not None:
+                # 撮影範囲の座標情報の更新
+                for region_key in ["left", "top", "right", "bottom"]:
+                    self.ss_region_info_dict[region_key]["value"] = GetDragAreaThread.region[region_key]
+
+                # 撮影範囲表示テキストの取得
+                ss_region_text = self.get_ss_region_text()
+                # 撮影範囲表示テキストの更新
+                self.window["-ss_region_text-"].update(value=ss_region_text)
+
+        # サブスレッドでエラーが発生したら
+        else:
+            return "error"
 
     def get_update_setting(self, values):
         """更新する設定の取得
@@ -216,9 +241,7 @@ class ShootingSettingWin(BaseWin):
         # 更新する設定
         update_setting = {}
         # キー名の両端のハイフンを取り除く
-        update_setting["translation_interval_sec"] = int(
-            values["-translation_interval_sec-"]
-        )  # 翻訳間隔(秒)
+        update_setting["translation_interval_sec"] = int(values["-translation_interval_sec-"])  # 翻訳間隔(秒)
         # 撮影範囲の左側x座標
         update_setting["ss_left_x"] = int(self.ss_region_info_dict["left"]["value"])
         # 撮影範囲の上側y座標

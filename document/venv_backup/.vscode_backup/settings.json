@@ -1,0 +1,27 @@
+{
+    // ファイルは変更後すぐに自動保存される
+    "files.autoSave": "afterDelay",
+    // Black サーバーとサブプロセスを起動するために使用するインタプリタのパスを設定する(グローバル)
+    "black-formatter.interpreter": ["python"],
+    // isort サーバーおよびサブプロセスの起動に使用されるインタプリタのパスを設定する(グローバル)
+    "isort.interpreter": ["python"],
+    // pythonの設定
+    "[python]": {
+        // Pythonファイルに対するデフォルトフォーマッターを設定する
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        // 保存時にファイルを自動フォーマットする
+        "editor.formatOnSave": true,
+        // 保存時にインポートを整理する
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    // Blackフォーマッターの引数を設定する（ここでは行の長さを119に設定）
+    "black-formatter.args": [
+        "--line-length=119"
+    ],
+    // isortの引数を設定する(blackフォーマッターに従う、119文字)
+    "isort.args":["--profile", "black","--line-length=119"],
+    // デフォルトのターミナルを設定する（コマンドプロンプト（cmd.exe））
+    "terminal.integrated.defaultProfile.windows": "Command Prompt"
+}

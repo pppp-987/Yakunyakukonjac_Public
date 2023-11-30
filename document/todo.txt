@@ -4,8 +4,44 @@ https://office54.net/python/tkinter/tkinter-how-to-use
 【Python GUI】「tkinter」で関数実行中にウィンドウがフリーズしてしまう問題を「threading」を使って回避する方法
 https://karupoimou.hatenablog.com/entry/20200427/1587975580
 
-画像スクロールバーのズレの解消
-
 翻訳画像作成機能の修正
 
-設定クラスの作成
+
+現在発生中のバグ
+
+バグの概要
+    翻訳画面から別の画面、キー設定画面で入力待ちの状態で別の画面に遷移した際に、スレッドが削除されないバグ
+バグの問題
+    スレッドが削除されない事によるメモリ不足(スレッド数の上限はメモリ、リソース)
+対処法
+    何かキーを押下すると次の処理に進めるため、スレッドが削除される
+状況
+    keyboard.read_event()がブロッキング関数のため、キーボードイベントが発生するまで次の処理に進まない
+    keyboardモジュールはタイムアウト処理に対応していないため、キーボードイベントが発生するまで対処不可。
+対処法
+    multiprocessinを使用する？
+
+    Python Keyboard module - Exit blocking read event function
+    https://stackoverflow.com/questions/61193279/python-keyboard-module-exit-blocking-read-event-function
+
+    プロセスベースの並列処理
+    https://zenn.dev/kaitolucifer/articles/1f0eda0ca1ed52#2.-multiprocessing
+
+    Wrapt_timeout_decorator
+    https://pypi.org/project/wrapt-timeout-decorator/
+    サブスレッドでは実行不可
+
+    【Python】自作関数に『タイムアウト』を設定するコード例【Windows】
+    https://srbrnote.work/archives/5683
+
+    Pythonの関数をタイムアウトさせるときに便利なライブラリ
+    https://scrapbox.io/PythonOsaka/Python%E3%81%AE%E9%96%A2%E6%95%B0%E3%82%92%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%A2%E3%82%A6%E3%83%88%E3%81%95%E3%81%9B%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%AB%E4%BE%BF%E5%88%A9%E3%81%AA%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA
+
+    シグナルを利用した仕組みはwindows非対応(signal.SIGALRM) UNIX系のみ
+    サブスレッドではオブジェクトのシリアライズ（プロセス間通信のためのデータのエンコード）中にエラーが発生する
+
+
+
+
+
+

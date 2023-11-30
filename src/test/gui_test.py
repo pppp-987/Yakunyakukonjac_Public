@@ -1,21 +1,25 @@
 import PySimpleGUI as sg
 
-window_theme = "DarkBlue3"
-# ウィンドウテーマの設定
-sg.theme(window_theme)
 # 1. レイアウト
 layout = [
     [
-        # テーマ一覧リストボックス
-        sg.Listbox(
-            values=sg.theme_list(),  # テーマ一覧
-            size=(20, 12),  # サイズ
-            key="-theme_list-",  # 識別子
-            enable_events=True,  # イベントを取得する
-        )
+        sg.Button("押してね", size=(30, 3), key="BUTTON"),
     ],
     [
-        sg.Button("確定", size=(30, 3), key="BUTTON"),
+        # 松竹梅から選択する。初期値'梅'
+        sg.Spin(["松", "竹", "梅"], "梅", readonly=False, key="SPIN_1"),
+        # range()の返り値をそのまま渡すとバグるのでリストに変換しておく
+        sg.Spin(list(range(100)), 0, readonly=False, key="SPIN_2"),
+    ],
+    [
+        # 松竹梅から選択する。初期値'梅'
+        sg.Combo(["松", "竹", "梅"], "梅", readonly=True, key="COMBO")
+    ],
+    [sg.Listbox(["松", "竹", "梅"], size=(15, 3), key="-list-")],
+    [
+        sg.Radio("松", "group_1", True, key="RADIO_MATSU"),
+        sg.Radio("竹", "group_1", False, key="RADIO_TAKE"),
+        sg.Radio("梅", "group_1", False, key="RADIO_UME"),
     ],
 ]
 
@@ -24,21 +28,23 @@ window = sg.Window(
     title="Window title",
     layout=layout,
     grab_anywhere=True,
+    #  Trueの場合、キーボードのキー操作がRead呼び出しからイベントとして返されます
     return_keyboard_events=True,
+    # no_titlebar=True,
+    # disable_close=True,
+    # Trueの場合、ウィンドウは画面上のすべての他のウィンドウの上に作成されます。このパラメータを使用して別のパラメータで作成されたウィンドウが下に押しやられる可能性があります
     keep_on_top=True,
+    use_custom_titlebar=True,
+    # Trueの場合、ウィンドウは「X」をクリックして閉じられません。代わりに、window.readからWINDOW_CLOSE_ATTEMPTED_EVENTが返されます
+    # enable_close_attempted_event = True
 )
+window.finalize()
+
 # 3. GUI処理
 while True:
-    event, values = window.read()
-    # print(event, values)
+    event, values = window.read(timeout=None)
+    print(event, values)
     if event is None:
         break
-    if event == "BUTTON":
-        print(sg.theme())
-    if event == "-theme_list-":
-        sg.theme(values["-theme_list-"][0])
-        print(values["-theme_list-"][0])
-        # 画面更新
-        window.refresh()
 
 window.close()

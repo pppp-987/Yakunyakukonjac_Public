@@ -1,19 +1,19 @@
-# ! デバッグ用
-import sys  # システム関連
 import os  # ディレクトリ関連
+import sys  # システム関連
 
+#! デバッグ用
 if __name__ == "__main__":
-    src_path = os.path.dirname(__file__) + "\..\.."  # パッケージディレクトリパス
+    src_path = os.path.join(os.path.dirname(__file__), "..", "..")  # パッケージディレクトリパス
     sys.path.append(src_path)  # モジュール検索パスを追加
 
-from package.fn import Fn  # 自作関数クラス
 from package.debug import Debug  # デバッグ用クラス
-from package.translation.screenshot_capture import ScreenshotCapture  # スクリーンショット撮影機能関連のクラス
+from package.fn import Fn  # 自作関数クラス
+from package.system_setting import SystemSetting  # ユーザーが変更不可能の設定クラス
 from package.translation.character_recognition import CharacterRecognition  # 文字認識機能関連のクラス
+from package.translation.screenshot_capture import ScreenshotCapture  # スクリーンショット撮影機能関連のクラス
 from package.translation.text_translation import TextTranslation  # テキスト翻訳機能関連のクラス
 from package.translation.translation_image import TranslationImage  # オーバーレイ翻訳画像作成機能関連のクラス
 from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
-from package.system_setting import SystemSetting  # ユーザーが変更不可能の設定クラス
 
 
 class Translation:
@@ -25,7 +25,7 @@ class Translation:
         Returns:
             file_name(str): 保存ファイル名(撮影日時)
         """
-        # Fn.time_log("翻訳開始")
+        Fn.time_log("翻訳開始")
 
         user_setting = UserSetting()  # ユーザ設定のインスタンス化
 
@@ -45,12 +45,10 @@ class Translation:
 
         # ! デバック用
         # ss_file_path = Debug.ss_file_path  # スクショ画像パス
-        # ss_file_path = Debug.debug_directory_path + "/test.png"  # スクショ画像パス
+        # ss_file_path = os.path.join(Debug.debug_directory_path , "test.png")  # スクショ画像パス
 
         # 文字認識機能
-        text_data_dict = CharacterRecognition.get_text_data_dict(
-            user_setting, ss_file_path
-        )  # 画像からテキスト情報を取得
+        text_data_dict = CharacterRecognition.get_text_data_dict(user_setting, ss_file_path)  # 画像からテキスト情報を取得
         text_before_list = text_data_dict["text_list"]  # 翻訳前テキストリストの取得
         text_region_list = text_data_dict["text_region_list"]  # テキスト範囲のリストの取得
         # Fn.time_log("文字取得")
@@ -60,9 +58,7 @@ class Translation:
         # text_region_list = Debug.text_region_list  # テキスト範囲のリスト
 
         # 翻訳機能
-        text_after_list = TextTranslation.get_text_after_list(
-            user_setting, text_before_list
-        )  # 翻訳後テキストリストの取得
+        text_after_list = TextTranslation.get_text_after_list(user_setting, text_before_list)  # 翻訳後テキストリストの取得
         # Fn.time_log("翻訳")
 
         # ! デバック用
@@ -84,6 +80,11 @@ class Translation:
 
         return file_name  # 保存ファイル名(撮影日時)
 
+
 # ! デバッグ用
 if __name__ == "__main__":
+    # AWSの設定ファイルのパスの設定
+    os.environ["AWS_CONFIG_FILE"] = SystemSetting.aws_config_file_path
+    # AWSの認証情報ファイルのパスの設定
+    os.environ["AWS_SHARED_CREDENTIALS_FILE"] = SystemSetting.aws_credentials_file_path
     image_path = Translation.save_history()

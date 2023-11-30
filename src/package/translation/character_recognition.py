@@ -1,12 +1,11 @@
+import logging  # ログの機能を提供
+
 import boto3  # AWSのAIサービス
-
-from PIL import Image  # 画像処理
 import easyocr  # OCRライブラリ
-import logging  # エラーログ記録
-
 from package.fn import Fn  # 自作関数クラス
-from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
 from package.system_setting import SystemSetting  # ユーザーが変更不可能の設定クラス
+from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
+from PIL import Image  # 画像処理
 
 
 class CharacterRecognition:
@@ -32,6 +31,10 @@ class CharacterRecognition:
         elif ocr_soft == "EasyOCR":
             # EasyOCRを使用して画像からテキスト情報を取得
             text_data_list = CharacterRecognition.easy_ocr(user_setting, ss_file_path)
+
+        # テキスト内容が空である要素の削除
+        CharacterRecognition.remove_empty_text_data(text_data_list)
+
         return text_data_list  # テキスト情報のリスト
 
     def amazon_textract_ocr(ss_file_path):
@@ -96,12 +99,12 @@ class CharacterRecognition:
         language_code = user_setting.get_setting("source_language_code")
 
         # EasyOCR用言語コードのリスト
-        EasyOCR_language_code = SystemSetting.EasyOCR_language_code
+        easy_ocr_language_code = SystemSetting.easy_ocr_update_language_code
 
         # 言語コードがEasyOCR用言語コードのリストに存在するなら
-        if language_code in EasyOCR_language_code:
+        if language_code in easy_ocr_language_code:
             # EasyOCR用言語コードに置き換える
-            language_code = EasyOCR_language_code[language_code]
+            language_code = easy_ocr_language_code[language_code]
 
         ocr_lang_list = [language_code]  # 抽出する言語のリスト
 
@@ -113,7 +116,11 @@ class CharacterRecognition:
         logging.getLogger().setLevel(logging.ERROR)
 
         # OCRの作成
-        reader = easyocr.Reader(lang_list=ocr_lang_list)
+        reader = easyocr.Reader(
+            lang_list=ocr_lang_list,  # 抽出する言語のリスト
+            model_storage_directory=SystemSetting.easy_ocr_model_path,  # EasyOCRモデルのディレクトリパス
+            user_network_directory=SystemSetting.easy_ocr_network_path,  # EasyOCRで使用するネットワークモデルのディレクトリ
+        )
         # ロギングの設定をデフォルトに戻す
         logging.getLogger().setLevel(logging.WARNING)
         # 画像内のテキストを抽出する
@@ -123,10 +130,10 @@ class CharacterRecognition:
         for text_box in result:
             # テキスト範囲の取得
             text_region = {
-                "left": int(text_box[0][0][0]),  # テキスト範囲の左側x座標
-                "top": int(text_box[0][0][1]),  # テキスト範囲の上側y座標
-                "width": int(text_box[0][2][0]) - int(text_box[0][0][0]),  # テキスト範囲の横幅
-                "height": int(text_box[0][2][1]) - int(text_box[0][0][1]),  # テキスト範囲の縦幅
+                "left": min(int(text_box[0][0][0]), int(text_box[0][2][0])),  # テキスト範囲の左側x座標
+                "top": min(int(text_box[0][0][1]), int(text_box[0][2][1])),  # テキスト範囲の上側y座標
+                "width": abs(int(text_box[0][2][0]) - int(text_box[0][0][0])),  # テキスト範囲の横幅
+                "height": abs(int(text_box[0][2][1]) - int(text_box[0][0][1])),  # テキスト範囲の縦幅
             }
             text = text_box[1]  # テキスト内容の取得
             # confidence = text_box[2] # 信頼度の取得
@@ -143,3 +150,23 @@ class CharacterRecognition:
         }
 
         return text_data_list  # テキスト情報のリスト
+
+    def remove_empty_text_data(text_data_list):
+        """テキスト内容が空である要素の削除
+
+        Args:
+            text_data_dict(List[text_list,text_region_list]): テキスト情報リスト
+                - text_list(List[text(str)]) : テキスト内容のリスト
+                - text_region_list(List[region]): テキスト範囲のリスト
+                    - text_region(dict{Left:int, Top:int, Width:int, Height:int}): テキスト範囲
+        """
+        # テキスト内容が空である要素番号のリストの取得
+        zero_text_count_index_list = [
+            index for index, text in enumerate(text_data_list["text_list"]) if len(text) == 0
+        ]
+
+        # テキスト内容が空である要素番号で走査（削除後の要素番号のずれを防ぐために逆順にソート）
+        for delete_index in zero_text_count_index_list[::-1]:
+            # テキスト内容が空である要素を削除
+            del text_data_list["text_list"][delete_index]  # テキスト内容の削除
+            del text_data_list["text_region_list"][delete_index]  # テキスト範囲の削除

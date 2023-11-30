@@ -1,21 +1,19 @@
-@REM å±¥æ­´ãƒ•ã‚©ãƒ«ãƒ€ã¸ç§»å‹•
-cd ..\src\history
+@REM ƒtƒ@ƒCƒ‹•Û‘¶Žž‚ÉAƒGƒ“ƒR[ƒfƒBƒ“ƒO‚ð"Shift-JIS"‚É‚·‚é
 
-@REM å±¥æ­´ã®å‰Šé™¤
-del /Q image_after\*
-del /Q image_before\*
+@REM ƒRƒ}ƒ“ƒh‚ð•\Ž¦‚µ‚È‚¢
+@echo off
 
-@REM .gitkeepã®ä½œæˆ
-echo. > image_after\.gitkeep
-echo. > image_before\.gitkeep
+@REM •¶ŽšƒR[ƒh‚ð"Shift-JIS"‚ÉÝ’è ƒƒbƒZ[ƒW‚Í”ñ•\Ž¦
+chcp 932 >nul
 
-@REM ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚©ãƒ«ãƒ€ã¸ç§»å‹•
-cd ..\..
+@REM ‰¼‘zŠÂ‹«‚ª—LŒø‚Å‚È‚¢‚È‚ç
+if not defined VIRTUAL_ENV (
+    @REM ‰¼‘zŠÂ‹«‚Ìƒ‹[ƒgƒfƒBƒŒƒNƒgƒŠ‚ÖˆÚ“®
+    cd ../..
+    @REM ‰¼‘zŠÂ‹«‚Ì—LŒø‰»
+    call Scripts\activate.bat
+)
 
-@REM ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®å‰Šé™¤
-rmdir /s /q src\package\__pycache__
-rmdir /s /q src\package\translation\__pycache__
-rmdir /s /q src\package\window\__pycache__
-rmdir /s /q src\package\thread\__pycache__
-
-pause
+@REM —š—ð‚Ìíœ
+del /Q YakunyakuKonjac_Public\src\history\image_after\*.png 2>nul
+del /Q YakunyakuKonjac_Public\src\history\image_before\*.png 2>nul

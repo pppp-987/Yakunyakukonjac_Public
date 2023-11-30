@@ -1,10 +1,8 @@
 import boto3  # AWSのAIサービス
-
 from deep_translator import GoogleTranslator  # google翻訳
-
 from package.fn import Fn  # 自作関数クラス
-from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
 from package.system_setting import SystemSetting  # ユーザーが変更不可能の設定クラス
+from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
 
 
 class TextTranslation:
@@ -79,9 +77,7 @@ class TextTranslation:
         text_after_list = []  # 翻訳語テキストのリスト作成
 
         # 翻訳オブジェクト作成
-        google_translator = GoogleTranslator(
-            source=source_language_code, target=target_language_code
-        )
+        google_translator = GoogleTranslator(source=source_language_code, target=target_language_code)
 
         for text_before in text_before_list:  # 翻訳前テキストで走査
             # 英語から日本語に翻訳

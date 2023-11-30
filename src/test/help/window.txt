@@ -1,0 +1,114 @@
+ |
+ |  set_icon(self, icon=None, pngbase64=None)
+ |      Changes the icon that is shown on the title bar and on the task bar.
+ |      NOTE - The file type is IMPORTANT and depends on the OS!
+ |      Can pass in:
+ |      * filename which must be a .ICO icon file for windows, PNG file for Linux
+ |      * bytes object
+ |      * BASE64 encoded file held in a variable
+ |
+ |      :param icon:      Filename or bytes object
+ |      :type icon:       (str)
+ |      :param pngbase64: Base64 encoded image
+ |      :type pngbase64:  (bytes)
+ |
+ |  set_min_size(self, size)
+ |      Changes the minimum size of the window. Note Window must be read or finalized first.
+ |
+ |      :param size: (width, height) tuple (int, int) of the desired window size in pixels
+ |      :type size:  (int, int)
+ |
+ |  set_title(self, title)
+ |      Change the title of the window
+ |
+ |      :param title: The string to set the title to
+ |      :type title:  (str)
+ |
+ |  set_transparent_color(self, color)
+ |      Set the color that will be transparent in your window. Areas with this color will be SEE THROUGH.
+ |
+ |      :param color: Color string that defines the transparent color
+ |      :type color:  (str)
+ |
+ |  start_thread = perform_long_operation(self, func, end_key)
+ |
+ |  un_hide(self)
+ |      Used to bring back a window that was previously hidden using the Hide method
+ |
+ |  visibility_changed(self)
+ |      When making an element in a column or someplace that has a scrollbar, then you'll want to call this function
+ |      prior to the column's contents_changed() method.
+ |
+ |  was_closed(self)
+ |      Returns True if the window was closed
+ |
+ |      :return: True if the window is closed
+ |      :rtype:  bool
+ |
+ |  widget_to_element(self, widget)
+ |      Returns the element that matches a supplied tkinter widget.
+ |      If no matching element is found, then None is returned.
+ |
+ |
+ |      :return:    Element that uses the specified widget
+ |      :rtype:     Element | None
+ |
+ |  write_event_value(self, key, value)
+ |      Adds a key & value tuple to the queue that is used by threads to communicate with the window
+ |
+ |      :param key:   The key that will be returned as the event when reading the window
+ |      :type key:    Any
+ |      :param value: The value that will be in the values dictionary
+ |      :type value:  Any
+ |
+ |  ----------------------------------------------------------------------
+ |  Class methods defined here:
+ |
+ |  get_screen_size() from builtins.type
+ |      This is a "Class Method" meaning you call it by writing: width, height = Window.get_screen_size()
+ |      Returns the size of the "screen" as determined by tkinter.  This can vary depending on your operating system and the number of monitors installed on your system.  For Windows, the primary monitor's size is returns. On some multi-monitored Linux systems, the monitors are combined and the total size is reported as if one screen.
+ |
+ |      :return: Size of the screen in pixels as determined by tkinter
+ |      :rtype:  (int, int)
+ |
+ |  ----------------------------------------------------------------------
+ |  Readonly properties defined here:
+ |
+ |  key_dict
+ |      Returns a dictionary with all keys and their corresponding elements
+ |      { key : Element }
+ |      :return: Dictionary of keys and elements
+ |      :rtype:  Dict[Any, Element]
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  AlphaChannel
+ |      A property that changes the current alpha channel value (internal value)
+ |      :return: the current alpha channel setting according to self, not read directly from tkinter
+ |      :rtype:  (float)
+ |
+ |  Size
+ |      Return the current size of the window in pixels
+ |
+ |      :return: (width, height) of the window
+ |      :rtype:  Tuple[(int), (int)] or Tuple[None, None]
+ |
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |
+ |  alpha_channel
+ |      A property that changes the current alpha channel value (internal value)
+ |      :return: the current alpha channel setting according to self, not read directly from tkinter
+ |      :rtype:  (float)
+ |
+ |  metadata
+ |      Metadata is available for all windows. You can set to any value.
+ |      :return: the current metadata value
+ |
+ |  hidden_master_root = None
+
+None

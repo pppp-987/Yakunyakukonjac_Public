@@ -1,4 +1,3 @@
-
 import PySimpleGUI as sg
 import time
 import threading
@@ -17,6 +16,17 @@ class Thread_cls:
         else:
             print("ウィンドウ終了")
 
+    def thread_create(id, window):
+        thread = threading.Thread(
+            name = "キー取得スレッド",
+            target=Thread_cls.my_long_operation,
+            args=(id, window),
+            daemon=True,
+        )
+        thread.start()
+        
+        while not window.was_closed():
+            time.sleep(1)
 
 class Win1:
     def main():
@@ -45,7 +55,8 @@ class Win1:
                 # thread = threading.Thread(target=lambda: my_long_operation(id))
                 # スレッド作成
                 thread = threading.Thread(
-                    target=Thread_cls.my_long_operation,
+                    name = "スレッド作成スレッド",
+                    target=Thread_cls.thread_create,
                     args=(id, window),
                     daemon=True,
                 )

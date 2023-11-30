@@ -1,51 +1,34 @@
-class Class1:
-    def decorator_with_args(arg1, arg2):
-        def real_decorator(func):
-            def wrapper(*args, **kwargs):
-                print(f"デコレータの引数: {arg1}, {arg2}")
-                return func(*args, **kwargs)
+# 言語情報一覧リスト{日本語表記、英語表記、言語コード(ISO 639-1),フォントパス}
+language_list = [
+    {"ja_text": "アラビア語", "en_text": "Arabic", "code": "ar", "font_path": "font_Segoe_path"},
+    {
+        "ja_text": "中国語",
+        "en_text": "Chinese",
+        "code": "zh-CN",
+        "font_path": "font_MicrosoftYaHei_path",
+    },
+    {"ja_text": "英語", "en_text": "English", "code": "en", "font_path": "font_Segoe_path"},
+    {"ja_text": "フランス語", "en_text": "French", "code": "fr", "font_path": "font_Segoe_path"},
+    {"ja_text": "ドイツ語", "en_text": "German", "code": "de", "font_path": "font_Segoe_path"},
+    {"ja_text": "イタリア語", "en_text": "Italian", "code": "it", "font_path": "font_Segoe_path"},
+    {"ja_text": "日本語", "en_text": "Japanese", "code": "ja", "font_path": "font_YuGothic_path"},
+    {"ja_text": "韓国語", "en_text": "Korean", "code": "ko", "font_path": "font_MalgunGothic_path"},
+    {"ja_text": "ポルトガル語", "en_text": "Portuguese", "code": "pt", "font_path": "font_Segoe_path"},
+    {"ja_text": "ロシア語", "en_text": "Russian", "code": "ru", "font_path": "font_Segoe_path"},
+    {"ja_text": "スペイン語", "en_text": "Spanish", "code": "es", "font_path": "font_Segoe_path"},
+]
 
-            return wrapper
+# EasyOCR用の言語コード(ISO 639-2)のリスト((ISO 639-1):(ISO 639-2))
+easy_ocr_language_code = {"zh-CN": "ch_sim"}
 
-        return real_decorator
+# 言語情報一覧リストから言語コードのリストを作成
+easy_ocr_language_code_list = [language_info["code"] for language_info in language_list]
 
-    # @staticmethod  # スタティック(静的)メソッドの定義
-    # def parameter_decorator(is_main_thread, event_window=None):  # デコレータの引数を取得する関数の宣言
-    #     """デコレータの引数を取得する関数
+# EasyOCR用の言語コードに変更する
+for before_code, after_code in easy_ocr_language_code.items():
+    # 更新箇所の要素番号の取得
+    index = easy_ocr_language_code_list.index(before_code)
+    # 言語コードの更新
+    easy_ocr_language_code_list[index] = after_code
 
-    #     Args:
-    #         is_main_thread (bool): メインスレッドかどうか
-    #         window (sg.Window, None): ポップアップイベントを返すWindowオブジェクト
-    #     """
-
-    #     def decorator(func):  # デコレータ関数の宣言。
-    #         """デコレータ関数。このデコレータを使用した関数は、'wrapper'関数に置き換えられる。
-
-    #         Args:
-    #             func (func): デコレートされる関数
-    #         """
-
-    #         def wrapper(*args, **kwargs):
-    #             """デコレータの内部関数。任意の位置引数(*args)とキーワード引数(**kwargs)を受け取る。"""
-    #             try:
-    #                 # エラーログ作成
-    #                 error_log = ErrorLog.create_error_log()
-    #                 # 元の関数実行前の処理
-    #                 func(*args, **kwargs)  # 元々のデコレートされる関数を実行
-    #             # エラー発生時
-    #             except Exception as e:
-    #                 # エラーログの出力処理
-    #                 ErrorLog.output_error_log(error_log, e, window)
-
-    #         return wrapper  # デコレータの内部関数を返す。
-
-    #     return decorator  # デコレータ関数を返す。
-
-
-class Class2:
-    @Class1.decorator_with_args(1, "引数2")
-    def my_function(age1):
-        print("関数が実行されました")
-
-
-Class2.my_function(1)
+print(easy_ocr_language_code_list)

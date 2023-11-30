@@ -1,13 +1,12 @@
-# ! デバッグ用
-import sys  # システム関連
 import os  # ディレクトリ関連
-
-if __name__ == "__main__":
-    src_path = os.path.dirname(__file__) + "\..\.."  # パッケージディレクトリパス
-    sys.path.append(src_path)  # モジュール検索パスを追加
-    print(src_path)
+import sys  # システム関連
 
 import PySimpleGUI as sg  # GUI
+
+#! デバッグ用
+if __name__ == "__main__":
+    src_path = os.path.join(os.path.dirname(__file__), "..", "..")  # パッケージディレクトリパス
+    sys.path.append(src_path)  # モジュール検索パスを追加
 
 from package.fn import Fn  # 自作関数クラス
 from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
@@ -75,21 +74,24 @@ class UserInfoWin(BaseWin):
             # 実際に画面が表示され、ユーザーの入力待ちになる
             event, values = self.window.read()
 
-            Fn.time_log("event=", event, "values=", values)
-            # プログラム終了イベント処理
-            if event == "-WINDOW CLOSE ATTEMPTED-":  # 閉じるボタン押下,Alt+F4イベントが発生したら
-                self.window_close()  # プログラム終了イベント処理
+            # Fn.time_log("event=", event, "values=", values)
+
+            # 共通イベントの処理が発生したら
+            if self.base_event(event, values):
+                continue
 
             # 確定ボタン押下イベント
             elif event == "-confirm-":
                 update_setting = values  # 更新する設定
                 # * update_setting = self.get_update_setting(values)  # 更新する設定の取得
                 self.user_setting.save_setting_file(update_setting)  # 設定をjsonファイルに保存
+                # 翻訳画面に遷移する処理
+                self.transition_to_translation_win()
 
-            # 確定ボタン押下イベント
+            # 戻るボタン押下イベント
             elif event == "-back-":
-                self.transition_target_win = "TranslationWin"  # 遷移先ウィンドウ名
-                self.window_close()  # プログラム終了イベント処理
+                # 翻訳画面に遷移する処理
+                self.transition_to_translation_win()
 
     # todo イベント処理記述
 

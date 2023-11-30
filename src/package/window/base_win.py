@@ -1,15 +1,10 @@
-# ! デバッグ用
-import sys  # システム関連
 import os  # ディレクトリ関連
-
-if __name__ == "__main__":
-    src_path = os.path.dirname(__file__) + "\..\.."  # パッケージディレクトリパス
-    sys.path.append(src_path)  # モジュール検索パスを追加
-    print(src_path)
+import sys  # システム関連
 
 import PySimpleGUI as sg  # GUI
-
+from package.error_log import ErrorLog  # エラーログに関するクラス
 from package.fn import Fn  # 自作関数クラス
+from package.global_status import GlobalStatus  # グローバル変数保存用のクラス
 from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
 
 
@@ -18,15 +13,17 @@ class BaseWin:
 
     def __init__(self):
         """コンストラクタ 初期設定"""
+        GlobalStatus.win_instance = self  # 現在のウィンドウインスタンスの保持
         self.user_setting = UserSetting()  # ユーザ設定のインスタンス化
-        self.window_title = ""  # ウィンドウタイトル
         self.transition_target_win = None  # 遷移先ウィンドウ名
+        self.is_restart_program = False  # 再起動するかどうか
 
     def start_win(self):
         """ウィンドウ開始処理"""
         Fn.time_log("ウィンドウ開始")  # ログ出力
         self.window = self.make_win()  # GUIウィンドウ作成処理
         self.window.finalize()  # GUIウィンドウ表示
+        self.window.force_focus()  # ウィンドウにフォーカスを持たせる
         self.event_start()  # イベント受付開始処理(終了処理が行われるまで繰り返す)
 
     def get_layout(self):
@@ -79,6 +76,32 @@ class BaseWin:
         # todo 終了設定(保存など)
         self.end_win()  # ウィンドウ終了処理
 
+    def base_event(self, event, values):
+        """共通のイベントの処理
+
+        Args:
+            event (_type_): 識別子
+            values (dict): 各要素の値の辞書
+        Return:
+            is_base_event(bool): 共通のイベントが発生したかどうか
+        """
+        # プログラム終了イベント処理
+
+        if event == "-WINDOW CLOSE ATTEMPTED-":  # 閉じるボタン押下,Alt+F4イベントが発生したら
+            self.window_close()  # プログラム終了イベント処理
+            return True  # 共通のイベントが発生したかどうか
+
+        # サブスレッドでエラーが発生したなら
+        elif event == "-thread_error_event-" or GlobalStatus.is_sub_thread_error:
+            # エラーポップアップの表示
+            sg.popup("\n".join(GlobalStatus.sub_thread_error_message))
+            self.window_close()  # プログラム終了イベント処理
+            return True  # 共通のイベントが発生したかどうか
+
+        # それ以外のイベントが発生したなら
+        else:
+            return False  # 共通のイベントが発生したかどうか
+
     def end_win(self):
         """ウィンドウ終了処理"""
         Fn.time_log("ウィンドウ終了")  # ログ出力
@@ -91,6 +114,13 @@ class BaseWin:
             transition_target_win(str): 遷移先ウィンドウ名
         """
         return self.transition_target_win
+
+    def get_is_restart_program(self):
+        """再起動するかどうかを取得する処理
+        Returns:
+            is_restart_program(bool): 再起動するかどうか
+        """
+        return self.is_restart_program
 
     # todo イベント処理記述
     def window_close(self):
@@ -109,6 +139,11 @@ class BaseWin:
         Returns:
             update_setting (dict): 更新する設定の値の辞書
         """
+
+    def transition_to_translation_win(self):
+        """翻訳画面に遷移する処理"""
+        self.transition_target_win = "TranslationWin"  # 遷移先ウィンドウ名
+        self.window_close()  # プログラム終了イベント処理
 
     def check_valid_number_event(self, window, event, values):
         """数字の入力値が有効かどうかを判定してGUI更新処理を行う処理
@@ -151,9 +186,7 @@ class BaseWin:
                 # 値が範囲外なら
                 else:
                     # メッセージテキスト
-                    message_value = (
-                        "  " + str(min_value) + "~" + str(max_value) + "の間で\n  入力してください。"
-                    )
+                    message_value = f"  {str(min_value)}~{str(max_value)}の間で\n  入力してください。"
 
                     # メッセージ末尾に改行を追加するなら
                     if is_add_newline_end:

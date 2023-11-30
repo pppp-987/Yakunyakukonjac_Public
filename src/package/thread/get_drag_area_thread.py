@@ -1,8 +1,7 @@
+import threading  # スレッド関連
 import tkinter as tk  # GUI
 
 from package.error_log import ErrorLog  # エラーログに関するクラス
-
-import threading  # スレッド関連
 
 
 class GetDragAreaThread:
@@ -34,7 +33,7 @@ class GetDragAreaThread:
         self.canvas.bind("<B1-Motion>", self.on_mouse_drag)
         self.canvas.bind("<ButtonRelease-1>", self.on_button_release)
         # キーバインド
-        self.root.bind("<KeyPress>", self.on_key_press)
+        # self.root.bind("<KeyPress>", self.on_key_press)
 
     def on_button_press(self, event):
         """マウスの左ボタンが押されたときのイベントハンドラ"""
@@ -93,23 +92,10 @@ class GetDragAreaThread:
             # 戻り値なし
             GetDragAreaThread.region = None
 
-    def on_key_press(self, event):
-        """キーが押されたときのイベントハンドラ"""
-        # アプリケーションを終了
-        self.root.quit()
-
-        # アプリケーションを削除
-        self.root.destroy()
-
     @staticmethod  # スタティックメソッドの定義
-    # @ErrorLog.parameter_decorator(None)  # エラーログを取得するデコレータ
     @ErrorLog.decorator  # エラーログを取得するデコレータ
-    def run(window):
+    def run():
         """ドラッグした領域の座標を取得する
-
-        Args:
-            window(sg.Window): Windowオブジェクト
-                - デコレータで使用するためキーワード引数で渡す
 
         Returns:
             GetDragAreaThread.region(dict{left, top, width, height})

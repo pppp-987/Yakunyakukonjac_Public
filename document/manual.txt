@@ -1,0 +1,49 @@
+1. インストーラーのダウンロード
+    非公開版(テスト用)
+        installer_private.exe
+    公開版
+        installer_public.exe
+
+    ウイルス対策ソフトに弾かれる場合は
+    batファイルをダウンロードしてください。
+
+2. 開発環境作成
+    インストーラー の実行
+        インストーラーがダウンロードされた場所に作成
+
+3. 実行ファイルがあるフォルダを開く
+    非公開版(テスト用)
+        venv_YakunyakuKonjac\YakunyakuKonjac\toolsを開く
+    公開版
+        venv_YakunyakuKonjac\YakunyakuKonjac_Public\toolsを開く
+
+4. AWSの設定(初回のみ)
+    aws.batの実行
+
+4. アプリの実行
+    app.batの実行
+
+履歴の削除
+    delete_history.batの実行
+
+設定のリセット
+    reset_setting.batの実行
+
+更新方法
+    1 . プロジェクトフォルダへの移動
+        非公開版(テスト用)
+            cd インストール先\venv_YakunyakuKonjac\YakunyakuKonjac
+        公開版
+            cd インストール先\venv_YakunyakuKonjac\YakunyakuKonjac_Public
+    2 . gitからダウンロード
+        git pull origin
+    3 . ログの確認
+        git log
+            githubの最新コミットが存在しているか確認
+
+
+コンフリクト(競合発生時)
+    以下のコードを実行
+        git reset --hard HEAD
+        最終コミット前まで戻す　ファイル変更内容もすべて戻す
+        変更箇所がある場合は別の場所に保存してください

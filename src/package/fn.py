@@ -1,7 +1,10 @@
-from datetime import datetime, timedelta  # 日時, 時間差
-import time  # 時間測定
 import os  # ディレクトリ関連
 import re  # 正規表現
+import subprocess  # 新しいプロセスを生成し、その入出力を管制するためのモジュール
+import sys  # Pythonのインタプリタや環境にアクセスするためのモジュール（引数の取得、システムパスの操作など）
+import time  # 時間測定
+from datetime import datetime, timedelta  # 日時, 時間差
+
 from package.system_setting import SystemSetting  # ユーザーが変更不可の設定クラス
 
 
@@ -186,10 +189,10 @@ class Fn:
 
         # 翻訳前画像のみのファイルの削除
         for before_file_name in before_only_file_name_set:
-            os.remove(image_before_directory_path + "/" + before_file_name)
+            os.remove(os.path.join(image_before_directory_path, before_file_name))
         # 翻訳後画像のみのファイルの削除
         for after_file_name in after_only_file_name_set:
-            os.remove(image_after_directory_path + "/" + after_file_name)
+            os.remove(os.path.join(image_after_directory_path, after_file_name))
 
         # ファイル名の形式が正しくないファイル名のリスト
         invalid_file_name_list = []
@@ -217,9 +220,9 @@ class Fn:
         # ファイル名の形式が正しくないファイルの削除
         for file_name in invalid_file_name_list:
             # 翻訳前画像フォルダから削除
-            os.remove(image_before_directory_path + "/" + file_name)
+            os.remove(os.path.join(image_before_directory_path, file_name))
             # 翻訳後画像フォルダから削除
-            os.remove(image_after_directory_path + "/" + file_name)
+            os.remove(os.path.join(image_after_directory_path, file_name))
 
     def search_dict_in_list(lst, key_name, value):
         """与えられたリスト内の辞書から指定したキーと値に一致する辞書を取得
@@ -238,9 +241,7 @@ class Fn:
                 # 辞書のキーと値が一致するなら一致する辞書を返す
                 return item
 
-    def check_file_limits(
-        directory_path, max_file_size_mb, max_file_count, max_file_retention_days
-    ):
+    def check_file_limits(directory_path, max_file_size_mb, max_file_count, max_file_retention_days):
         """指定された制限を超えているかどうかをチェックして結果を返すメソッド
 
         Args:
@@ -295,7 +296,7 @@ class Fn:
                 file_date = datetime.strptime(file_base_name, "%Y%m%d_%H%M%S")
 
                 # ファイルサイズの取得
-                file_size = os.path.getsize(directory_path + file_name) / (1024)
+                file_size = os.path.getsize(os.path.join(directory_path, file_name)) / (1024)
 
                 # 合計サイズの
                 total_size_kb += file_size + 1
@@ -309,7 +310,6 @@ class Fn:
                     # ファイル保存期間がオーバーしているかどうか
                     "is_file_time_over": file_date < oldest_date,
                 }
-                # print(total_size_kb, list(file_limit_info_dict.values()))
 
                 if True not in file_limit_info_dict.values():
                     # 指定された制限を超えているかどうかを保存
@@ -364,3 +364,61 @@ class Fn:
         file_name = file_base_name + image_file_extension
 
         return file_name  # ファイル名("yyyymmdd_hhmmss.拡張子")
+
+    @staticmethod  # スタティック(静的)メソッド
+    def command_run(command_list, file_path=None):
+        """与えられたコマンドのリストを実行する
+
+        Args:
+            command_list (list[command:str]): 実行するコマンドのリスト。
+            file_path (str, optional): 結果を書き込むファイルのパス。デフォルトではNone（ファイルへの書き込みは行われない）。
+
+        """
+
+        # 結果を書き込むファイルのパスが指定されている場合、そのファイルに出力する
+        if file_path is not None:
+            with open(file_path, "w") as f:  # 指定されたファイルを書き込みモードで開く
+                subprocess.run(
+                    args=command_list,  # コマンドのリスト
+                    check=True,  # 終了コードが0以外の時に例外を起こす
+                    stdout=f,  # 外部コマンドの標準出力のリダイレクト先
+                    creationflags=subprocess.CREATE_NO_WINDOW,  # コンソールウィンドウを開かない
+                )  # コマンドを実行、ファイルに出力
+
+        # 結果を書き込むファイルのパスが指定されていない場合、標準出力に出力
+        else:
+            subprocess.run(
+                args=command_list,  # コマンドのリスト
+                check=True,  # 終了コードが0以外の時に例外を起こす
+                creationflags=subprocess.CREATE_NO_WINDOW,  # コンソールウィンドウを開かない
+            )  # コマンドを実行
+
+    @staticmethod  # スタティック(静的)メソッド
+    def get_script_directory_path():
+        """現在のスクリプトファイルが存在するディレクトリのパスを取得する処理
+
+        Returns:
+            directory_path(src): 現在のスクリプトファイルが存在するディレクトリのパス
+        """
+        # ファイルが凍結(exe)なら
+        if getattr(sys, "frozen", False):
+            # 実行可能ファイルが存在するディレクトリのパス
+            return os.path.dirname((sys.executable))
+        else:
+            # スクリプトファイルが存在するディレクトリのパス
+            return os.path.dirname(__file__)
+
+    def create_aws_file():
+        """AWSの空の設定ファイルを作成する処理"""
+
+        # AWSの認証情報や設定ファイルのディレクトリが存在しないなら作成する
+        if not os.path.exists(SystemSetting.aws_setting_directory_path):
+            os.makedirs(SystemSetting.aws_setting_directory_path)
+
+        # 空のAWS設定ファイルを作成（既に存在する場合は何もしない）
+        with open(SystemSetting.aws_config_file_path, "a"):
+            pass
+
+        # 空のAWS認証情報ファイルを作成（既に存在する場合は何もしない）
+        with open(SystemSetting.aws_credentials_file_path, "a"):
+            pass

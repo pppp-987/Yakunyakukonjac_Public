@@ -1,0 +1,568 @@
+Windowクラスは、単一のウィンドウを表します。
+
+メソッド:
+
+AddRow: 行を追加します。
+AddRows: 複数の行を一度に追加します。
+BringToFront: ウィンドウを前面に表示します。
+Close: ウィンドウを閉じます。
+CloseNonBlocking: ウィンドウを非同期で閉じます。
+CurrentLocation: ウィンドウの現在の位置を取得します。
+Disable: ウィンドウを無効にします。
+Enable: ウィンドウを有効にします。
+Fill: ウィンドウ内の要素に値を設定します。
+Finalize: ウィンドウを最終的に処理します。
+FindElement: キーに基づいて要素を検索します。
+GetScreenDimensions: スクリーンの寸法を取得します。
+Hide: ウィンドウを非表示にします。
+Layout: ウィンドウのレイアウトを設定します。
+Maximize: ウィンドウを最大化します。
+Minimize: ウィンドウを最小化します。
+Move: ウィンドウを指定した位置に移動します。
+Normal: ウィンドウを通常のサイズに戻します。
+Read: ウィンドウからの入力を読み取ります。
+Reappear: ウィンドウを再表示します。
+Refresh: ウィンドウを更新します。
+SaveToDisk: ウィンドウの状態をディスクに保存します。
+SendToBack: ウィンドウを背面に送ります。
+SetAlpha: ウィンドウの透明度を設定します。
+SetIcon: ウィンドウのアイコンを設定します。
+SetTransparentColor: ウィンドウの透明色を設定します。
+UnHide: ウィンドウを表示します。
+VisibilityChanged: ウィンドウの可視性が変更されたときのイベントを処理します。
+
+ |  __call__(self, *args, **kwargs)
+ |      window.readを呼び出すために、書き込む必要がありません。
+ |      window() == window.read()
+ |      window(timeout=50) == window.read(timeout=50)
+ |
+ |      :return: Readが返すイベントと値
+ |      :rtype:  Tuple[Any, Dict[Any, Any]]
+ |
+
+ |  __getitem__(self, key)
+ |      渡されたキーに一致する要素を返します。
+ |      これは、次のようにコードを書いて呼び出されます：
+ |      window['要素キー'].Update
+ |
+ |      :param key: 検索するキー
+ |      :type key:  str | int | tuple | object
+ |      :rtype:     Element | Input | Combo | OptionMenu | Listbox | Radio | Checkbox | Spin | Multiline | Text | StatusBar | Output | Button | ButtonMenu | ProgressBar | Image | Canvas | Graph | Frame | VerticalSeparator | HorizontalSeparator | Tab | TabGroup | Slider | Column | Pane | Menu | Table | Tree | ErrorElement | None
+ |
+
+ |  __init__(self, title, layout=None, default_element_size=None, default_button_element_size=(None, None), auto_size_text=None, auto_size_buttons=None, location=(None, None), relative_location=(None, None), size=(None, None), element_padding=None, margins=(None, None), button_color=None, font=None, progress_bar_color=(None, None), background_color=None, border_depth=None, auto_close=False, auto_close_duration=3, icon=None, force_toplevel=False, alpha_channel=None, return_keyboard_events=False, use_default_focus=True, text_justification=None, no_titlebar=False, grab_anywhere=False, grab_anywhere_using_control=True, keep_on_top=None, resizable=False, disable_close=False, disable_minimize=False, right_click_menu=None, transparent_color=None, debugger_enabled=True, right_click_menu_background_color=None, right_click_menu_text_color=None, right_click_menu_disabled_text_color=None, right_click_menu_selected_colors=(None, None), right_click_menu_font=None, right_click_menu_tearoff=False, finalize=False, element_justification='left', ttk_theme=None, use_ttk_buttons=None, modal=False, enable_close_attempted_event=False, titlebar_background_color=None, titlebar_text_color=None, titlebar_font=None, titlebar_icon=None, use_custom_titlebar=None, scaling=None, sbar_trough_color=None, sbar_background_color=None, sbar_arrow_color=None, sbar_width=None, sbar_arrow_width=None, sbar_frame_color=None, sbar_relief=None, metadata=None)
+ |      :param title: タイトルバーとタスクバーに表示されるタイトル
+ |      :type title:  (str)
+ |      :param layout: ウィンドウのレイアウト。Layoutメソッドでも指定できます。
+ |      :type layout:  List[List[Element]] | Tuple[Tuple[Element]]
+ |      :param default_element_size: このウィンドウのすべての要素のデフォルトのサイズ（幅と高さ）（文字数で指定）
+ |      :type default_element_size:  (int, int) - (幅, 高さ)
+ |      :param default_button_element_size: このウィンドウのすべてのボタン要素のデフォルトのサイズ（幅と高さ）（文字数で指定）
+ |      :type default_button_element_size:  (int, int)
+ |      :param auto_size_text: ウィンドウ内の要素をテキストの長さに合わせてサイズ変更する場合はTrue
+ |      :type auto_size_text:  (bool)
+ |      :param auto_size_buttons: ボタンのサイズをボタンのテキストに合わせて自動的に調整する場合はTrue
+ |      :type auto_size_buttons:  (bool)
+ |      :param relative_location: ピクセル単位のウィンドウのデフォルトの位置と相対的な(x, y)座標位置。通常、ウィンドウは中央に配置されます。この位置はウィンドウが作成される場所のデフォルトの位置に対する相対的な位置です。負の値にすることもできます。
+ |      :type relative_location:  (int, int)
+ |      :param location: スクリーン上のウィンドウの左上隅をピクセル単位で指定する(x, y)座標位置。デフォルトは画面の中央に配置されます。
+ |      :type location:  (int, int)
+ |      :param size: このウィンドウのピクセル単位のサイズ（幅と高さ）。通常、ウィンドウは内容に合わせて自動的にサイズ変更され、ユーザーが絶対的なサイズを設定することはありません。
+ |      :type size:  (int, int)
+ |      :param element_padding: ウィンドウ内の要素の周囲に追加されるデフォルトのパディング量（左/右、上/下）または((左、右)、(上、下))または整数。整数の場合、タプル(int, int)に変換されます。
+ |      :type element_padding:  (int, int)または((int, int),(int,int))またはint
+ |      :param margins: 要素が表示される前に、ウィンドウのフレームの周囲に残すピクセルの量（左/右、上/下）
+ |      :type margins:  (int, int)
+ |      :param button_color: ウィンドウ内のすべてのボタンのデフォルトのボタンカラー
+ |      :type button_color:  (str, str)またはstr
+ |      :param font: フォントファミリー、サイズなどを指定します。タプルまたは単一の文字列形式 'name size styles'。スタイル: italic * roman bold normal underline overstrike
+ |      :type font:  (strまたは(str, int[, str])またはNone)
+ |      :param progress_bar_color: (バーカラー、背景カラー) すべてのプログレスバーのデフォルトのカラーを設定します
+ |      :type progress_bar_color:  (str, str)
+ |      :param background_color: バックグラウンドのカラー
+ |      :type background_color:  (str)
+ |      :param border_depth: すべての要素のデフォルトのボーダーデプス（幅）
+ |      :type border_depth:  (int)
+ |      :param auto_close: Trueの場合、ウィンドウは自動的に閉じられます
+ |      :type auto_close:  (bool)
+ |      :param auto_close_duration: ウィンドウを閉じる前に待機する秒数
+ |      :type auto_close_duration:  (int)
+ |      :param icon: ファイル名またはBase64値のいずれか。Windowsの場合、ファイル名はICO形式である必要があります。Linuxの場合、ICO形式であってはなりません。最も移植性が高いのはPNGファイルのBase64を使用することです。これはすべてのOSで動作します
+ |      :type icon:  (str | bytes)
+ |      :param force_toplevel: Trueの場合、このウィンドウは通常の隠れたマスターウィンドウの使用をスキップします
+ |      :type force_toplevel:  (bool)
+ |      :param alpha_channel: ウィンドウの不透明度を設定します。0 = 不可視、1 = 完全に可視。0から1の値は、一部の環境では半透明のウィンドウを生成します（Raspberry Piでは常にこの値は1で変更できません）。
+ |      :type alpha_channel:  (float)
+ |      :param return_keyboard_events: Trueの場合、キーボードのキー押下はRead呼び出しからイベントとして返されます
+ |      :type return_keyboard_events:  (bool)
+ |      :param use_default_focus: Trueの場合、デフォルトのフォーカスアルゴリズムを使用して「正しい」要素にフォーカスを設定します
+ |      :type use_default_focus:  (bool)
+ |      :param text_justification: ウィンドウ内のすべてのテキスト要素のデフォルトのテキスト配置
+ |      :type text_justification:  'left' | 'right' | 'center'
+ |      :param no_titlebar: Trueの場合、タイトルバーおよびフレームがウィンドウに表示されません。これによりウィンドウを最小化できず、タスクバーに表示されません
+ |      :type no_titlebar:  (bool)
+ |      :param grab_anywhere: Trueの場合、マウスをクリックしてウィンドウをドラッグできます。一部のシステムでは入力フィールドでは動作しません
+ |      :type grab_anywhere:  (bool)
+ |      :param grab_anywhere_using_control: Trueの場合、CONTROLキー+左クリックでウィンドウをドラッグできます。デフォルトはTRUEです。通常のgrab_anywhereとは異なり、すべての要素で動作します。
+ |      :type grab_anywhere_using_control:  (bool)
+ |      :param keep_on_top: Trueの場合、ウィンドウは画面上のすべての他のウィンドウの前に作成されます。このパラメータで別のウィンドウを作成すると、下に押し下げられる可能性があります
+ |      :type keep_on_top:  (bool)
+ |      :param resizable: Trueの場合、ユーザーがウィンドウのサイズを変更できます。注意：すべての要素がサイズや位置が変更されるわけではありません。
+ |      :type resizable:  (bool)
+ |      :param disable_close: Trueの場合、ウィンドウの右上隅のXボタンが機能しなくなります。注意して使用し、ユーザーに対する方法を常に提供してください
+ |      :type disable_close:  (bool)
+ |      :param disable_minimize: Trueの場合、ユーザーはウィンドウを最小化できません。画面全体を占有してそのままにするのに便利です。
+ |      :type disable_minimize:  (bool)
+
+  |      :param right_click_menu:                     この要素が右クリックされたときに表示されるメニューアイテムのリスト。正確な形式についてはユーザードキュメントを参照してください。
+ |      :type right_click_menu:                      List[List[ List[str] | str ]]
+ |      :param transparent_color:                    ウィンドウの一部がこの色である場合、完全に透明になります。これらのスポットをクリックしてこのウィンドウの下にあるウィンドウにアクセスすることもできます。
+ |      :type transparent_color:                     (str)
+ |      :param debugger_enabled:                     Trueの場合、内部デバッガが有効になります
+ |      :type debugger_enabled:                      (bool)
+ |      :param right_click_menu_background_color:    右クリックメニューの背景色
+ |      :type right_click_menu_background_color:     (str)
+ |      :param right_click_menu_text_color:          右クリックメニューのテキストカラー
+ |      :type right_click_menu_text_color:           (str)
+ |      :param right_click_menu_disabled_text_color: 無効な右クリックメニューアイテムのテキストカラー
+ |      :type right_click_menu_disabled_text_color:  (str)
+ |      :param right_click_menu_selected_colors:     選択されたアイテムのテキストおよび背景色。タプルまたはカラー文字列で指定できます。単一のカラーを設定したい場合は、背景のみを設定できます。通常はタプルですが、単純な双色文字列 "foreground on background" も使用できます。背景のみを設定したい場合は、単一のカラーが使用できます。
+ |      :type right_click_menu_selected_colors:      (str, str) | str | Tuple
+ |      :param right_click_menu_font:                右クリックメニューのフォント
+ |      :type right_click_menu_font:                 (strまたは(str, int[, str])またはNone)
+ |      :param right_click_menu_tearoff:             Trueの場合、すべての右クリックメニューを切り離すことができます
+ |      :type right_click_menu_tearoff:              bool
+ |      :param finalize:                             Trueの場合、Finalizeメソッドが呼び出されます。クリーンなコードのために、.Finalizeをチェーンする代わりにこれを使用します
+ |      :type finalize:                              (bool)
+ |      :param element_justification:                ウィンドウ内のすべての要素の配置 'left'、'right'、'center' は有効な値です
+ |      :type element_justification:                 (str)
+ |      :param ttk_theme:                            ウィンドウのtkinter ttk "テーマ"を設定します。デフォルト = DEFAULT_TTK_THEME。すべてのttkウィジェットをこのテーマをデフォルトとして使用します
+ |      :type ttk_theme:                             (str)
+ |      :param use_ttk_buttons:                      ウィンドウ内のすべてのボタンに影響します。True = ttkボタンを使用します。False = ttkボタンを使用しないでください。None = Macの場合のみttkボタンを使用します
+ |      :type use_ttk_buttons:                       (bool)
+ |      :param modal:                                Trueの場合、このウィンドウは閉じられるまでユーザーが対話できる唯一のウィンドウになります
+ |      :type modal:                                 (bool)
+ |      :param enable_close_attempted_event:         Trueの場合、ウィンドウは "X" をクリックして閉じられません。代わりに、window.read から WINDOW_CLOSE_ATTEMPTED_EVENT イベントが返されます
+ |      :type enable_close_attempted_event:          (bool)
+ |      :param titlebar_background_color:            use_custom_titlebar でカスタムタイトルバーが指定されている場合、これを背景色として使用します
+ |      :type titlebar_background_color:             (str | None)
+ |      :param titlebar_text_color:                  use_custom_titlebar でカスタムタイトルバーが指定されている場合、これをテキストカラーとして使用します
+ |      :type titlebar_text_color:                   (str | None)
+ |      :param titlebar_font:                        use_custom_titlebar でカスタムタイトルバーが指定されている場合、これをタイトルフォントとして使用します
+ |      :type titlebar_font:                         (strまたは(str, int[, str])またはNone)
+ |      :param titlebar_icon:                        use_custom_titlebar でカスタムタイトルバーが指定されている場合、これをアイコンとして使用します（ファイルまたはBase64バイト）
+ |      :type titlebar_icon:                         (bytes | str)
+ |      :param use_custom_titlebar:                  Trueの場合、通常のタイトルバーの代わりにカスタムタイトルバーが使用されます
+ |      :type use_custom_titlebar:                   bool
+ |      :param scaling:                              ウィンドウ内の要素にスケーリングを適用します。set_optionsを使用してグローバルに設定できます
+ |      :type scaling:                               float
+ |      :param sbar_trough_color:                    スクロールバーのスローのカラー
+ |      :type sbar_trough_color:                     (str)
+ |      :param sbar_background_color:                スクロールバーの矢印ボタンの背景と "サム"（つかんでスライドするもの）のカラー。マウスが上にあるとアローカラーに切り替わります
+ |      :type sbar_background_color:                 (str)
+ |      :param sbar_arrow_color:                     スクロールバーの末尾にあるアローカラー（ボタンのように見えます）。マウスが上にあると背景色に切り替わります
+ |      :type sbar_arrow_color:                      (str)
+ |      :param sbar_width:                           スクロールバーの幅（ピクセル単位）
+ |      :type sbar_width:                            (int)
+ |      :param sbar_arrow_width:                     スクロールバーのスクロールバーの矢印の幅。全体的なスクロールバーの幅に影響を与える可能性があります
+ |      :type sbar_arrow_width:                      (int)
+ |      :param sbar_frame_color:                     スクロールバーの周りのフレームのカラー（一部のttkテーマのみで使用可能）
+ |      :type sbar_frame_color:                      (str)
+ |      :param metadata:                             任意のユーザーメタデータを設定できます
+ |      :type metadata:                              (Any)
+
+ |  add_row(self, *args)
+ |      ウィンドウのself.Rows変数に要素の単一行を追加します。
+ |      一般的に、これはユーザーがウィンドウのレイアウトを構築する方法ではありません。
+ |      ユーザーは、単一のレイアウト（リストのリスト）を作成し、それをWindowオブジェクトのパラメータとして渡すか、Window.Layout（layout）を呼び出すべきです。
+ |
+ |      :param *args: List[Elements]
+ |      :type *args:
+ |
+ |  add_rows(self, rows)
+ |      要素のリストのリストをループし、各行（リスト）をレイアウトに追加します。
+ |      これはウィンドウを作成するための最良の方法ではありません。一度に全レイアウトを送信して、それをWindow呼び出しのパラメータとして渡す方が良いです。
+ |
+ |      :param rows: 要素のリストのリスト
+ |      :type rows:  List[List[Elements]]
+ |
+ |  bind(self, bind_string, key, propagate=True)
+ |      ウィンドウにtkinterのイベントを追加するために使用します。
+ |      tkinter固有のデータは、ウィンドウのメンバー変数user_bind_eventにあります。
+ |      :param bind_string: tkinterがそのバインド関数で期待する文字列
+ |      :type bind_string:  (str)
+ |      :param key:         tkinterイベントが発生したときに生成されるイベント
+ |      :type key:          str | int | tuple | object
+ |      :param propagate:   Trueの場合、tkinterにイベントを伝えるように指示されます
+ |      :type propagate:    (bool)
+ |
+ |  bring_to_front(self)
+ |      このウィンドウをすべての他のウィンドウの前に持ってきます（おそらく "常に最前面に表示" ウィンドウの前に持ってこないかもしれません）
+ |
+ |  close(self)
+ |      ウィンドウを閉じます。ウィンドウが破棄されていてもユーザーは安全に呼び出すことができます。ウィンドウが終了したら常に呼び出すべきです。
+ |      これにより、スレッド内でリソースが適切に解放されます。
+ |
+ |  current_location(self, more_accurate=False)
+ |      ウィンドウの左上隅の現在の位置を取得します。
+ |      環境によっては、返される値にタイトルバーなどが含まれないことがあるため、注意が必要です。
+ |      新しいオプションであるmore_accurateを使用して、理論的な左上の位置を取得することもできます。
+ |      タイトルバーとメニューバーはOSによって作成されます。Webページで実行する場合（repl、trinketなど）、場所の計算方法が予測不可能な場合があるため、値が "ずれて" 見えることがあります。
+ |
+ |      :param more_accurate: Trueの場合、ウィンドウのジオメトリを使用してタイトルバー、メニューバーを考慮に入れた最上部の位置を取得します
+ |      :type more_accurate:  (bool)
+ |      :return:              タプル形式でのxとyの位置（x、y）
+ |      :rtype:               Tuple[(int | None), (int | None)]
+ |
+ |  current_size_accurate(self)
+ |      tkinterのジオメトリ設定に基づいてウィンドウの現在のサイズを取得します
+ |
+ |      :return:              タプル形式でのxとyのサイズ（x、y）
+ |      :rtype:               Tuple[(int | None), (int | None)]
+ |
+ |  ding(self, display_number=0)
+ |      "ベル"サウンドを鳴らします。これはtkinterによって提供される機能です。呼び出す前にウィンドウを最終化する必要があります。
+ |      tkinterの呼び出し方法の説明に従ってディスプレイのベルを鳴らします。
+ |      :param display_number: ディスプレイのベルを鳴らすためのtkinterのbellメソッドに渡されるパラメータ "displayof"
+ |      :type display_number:  int
+ |
+ |  disable(self)
+ |      ユーザーからの入力を受け付けないようにウィンドウを無効にします
+ |
+ |  disable_debugger(self)
+ |      内部デバッガを無効にします。デフォルトではデバッガは有効です
+ |
+ |  disappear(self)
+ |      ウィンドウを画面から "消える" ようにしますが、タスクバーには残ります。これはアルファチャンネルを0にすることによって行われます。注意: 一部のプラットフォームではアルファがサポートされていない場合があります。その場合、ウィンドウは表示されたままです。たとえば、Raspberry Piにはアルファ設定がありません
+ |
+ |  element_list(self)
+ |      ウィンドウ内のすべての要素のリストを返します
+ |
+ |      :return: ウィンドウとウィンドウ内のコンテナ要素のすべての要素のリスト
+ |      :rtype:  List[Element]
+ |
+ |  enable(self)
+ |      以前に無効にしたウィンドウを再度ユーザー入力を受け付けるように有効にします
+ |
+ |  enable_debugger(self)
+ |      内部デバッガを有効にします。デフォルトではデバッガは有効です
+ |
+ |  extend_layout(self, container, rows)
+ |      このウィンドウ内の既存のコンテナ要素に新しい行を追加します
+ |      コンテナがスクロール可能なColumnの場合、contents_changed()メソッドも呼び出す必要があります
+ |
+ |      :param container: レイアウトが配置されるコンテナ要素
+ |      :type container:  Frame | Column | Tab
+ |      :param rows:      追加されるレイアウト
+ |      :type rows:       (List[List[Element]])
+ |      :return:          (Window) self 、他のメソッドと連結できるように
+ |      :rtype:           (Window)
+ |
+ |  fill(self, values_dict)
+ |      入力フィールドとしての要素にデータを基づいて埋めます
+ |
+ |      :param values_dict: ペア
+ |      :type values_dict:  (Dict[Any, Any]) - {Element_key : value}
+ |      :return:            他のメソッドと連結できるようにselfを返します
+ |      :rtype:             (Window)
+ |
+ |  finalize(self)
+ |      このメソッドを使用して、レイアウトを実際のtkinterウィンドウにビルドします。実際には、このメソッドはRead（timeout=0）のようなものです。ブロックせず、レイアウトを要素を表すtkinterウィジェットに変換します。たくさんのアクションがあります！
+ |
+ |      :return: メソッド "チェーン" が可能になるように 'self' を返します（それについて詳しく読んでみてください、非常にクールです！）
+ |      :rtype:  (Window)
+
+  |  find_element(self, key, silent_on_error=False)
+ |      提供されたキーに関連付けられた要素オブジェクトを見つけます。
+ |      ユーザーによって呼び出す必要のないこのメソッドです
+ |
+ |      次のステートメントを書いて同じ操作を実行できます:
+ |      element = window[key]
+ |
+ |      この呼び出しでエラーチェックを行わずに検索を実行したい場合、
+ |      グローバルでエラーチェックをオフにしていない場合は、この呼び出しを行う必要があります。
+ |
+ |      find_elementは通常、要素のUpdateメソッド（または他の要素のメソッド）の呼び出しと組み合わせて使用されます:
+ |      window[key].update(new_value)
+ |
+ |      以前の方法と比較して：
+ |      window.FindElement(key).Update(new_value)
+ |
+ |      この呼び出しは次のいずれかに省略できます：
+ |      find_element = FindElement == Element == Find
+ |      find_elementはPEP8に準拠した呼び出しであり、使用すべきです。
+ |
+ |      この呼び出しは一致が見つからない場合、Noneを返すため、チェックしないとコードがクラッシュする可能性があります。
+ |
+ |      :param key:             ウィンドウ.find_elementおよび返される値でこの要素を一意に識別するために使用されます
+ |      :type key:              str | int | tuple | object
+ |      :param silent_on_error: Trueの場合、キーエラーのポップアップを表示せず、警告を表示しません
+ |      :type silent_on_error:  (bool)
+ |      :return:                一致する要素が見つかった場合は要素; silent_on_errorがFalseの場合はエラー要素; silent_on_errorがTrueの場合はNone
+ |      :rtype:                 Element | Error Element | None
+ |
+ |  find_element_with_focus(self)
+ |      現在、tkinterによって報告されたフォーカスを持つ要素を返します。要素が見つからない場合はNoneが返されます！
+ |      :return: フォーカスを持つ要素が見つかった場合は要素、要素が見つからない場合はNone
+ |      :rtype:  Element | None
+ |
+ |  force_focus(self)
+ |      このウィンドウにフォーカスを持たせます
+ |
+ |  get_screen_dimensions(self)
+ |      画面の寸法を取得します。注意 - これを機能させるには既にウィンドウが開いている必要があります（tkinterのせいではなく、私のせい）
+ |
+ |      :return: ピクセル単位の幅と高さを含むタプル
+ |      :rtype:  Tuple[None, None] | Tuple[width, height]
+ |
+ |  grab_any_where_off(self)
+ |      グラブエニウェアの機能をウィンドウ作成後にオフにします。最終化またはリードされていないウィンドウでは試してはいけません。
+ |
+ |  grab_any_where_on(self)
+ |      グラブエニウェアの機能をウィンドウ作成後にオンにします。最終化またはリードされていないウィンドウでは試してはいけません。
+ |
+ |  hide(self)
+ |      ウィンドウを画面とタスクバーから非表示にします
+ |
+ |  is_closed(self)
+ |      ウィンドウがおそらく閉じられた場合はTrueを返します。時々判断が難しいかもしれません
+ |
+ |      :return: ウィンドウが閉じられたか破棄された場合はTrue
+ |      :rtype:  (bool)
+ |
+ |  keep_on_top_clear(self)
+ |      ウィンドウが作成された後、keep_on_topをクリアします。効果はウィンドウがこれを設定した場合と同じです。
+ |
+ |  keep_on_top_set(self)
+ |      ウィンドウが作成された後、keep_on_topを設定します。効果はウィンドウがこれを設定した場合と同じです。ウィンドウは前面にも表示されます
+ |
+ |  layout(self, rows)
+ |      ウィンドウのレイアウトを指定する2つ目の方法です。もう一つはレイアウトをWindowオブジェクトのパラメータとして渡す方法です。パラメータメソッドが現在の推奨方法です。
+ |
+ |      :param rows: あなたの全体のレイアウト
+ |      :type rows:  List[List[Elements]]
+ |      :return:     メソッド呼び出しをチェーンできるようにselfを返します
+ |      :rtype:      (Window)
+ |
+ |  load_from_disk(self, filename)
+ |      SaveToDisk呼び出しの結果をPickle形式で保存する前の呼び出しから値を復元します
+ |
+ |      :param filename: ロードするPickleファイル名
+ |      :type filename:  (str)
+ |
+ |  make_modal(self)
+ |      ウィンドウを "モーダルウィンドウ" にします
+ |      これは、このウィンドウが閉じられるまで他のウィンドウとの対話ができなくなることを意味します
+ |
+ |      注意 - 申し訳ありませんが、Macユーザー - モーダルウィンドウは使用できません... tkinterのMac開発者にロビー活動を行ってください
+ |
+ |  maximize(self)
+ |      ウィンドウを最大化します。これは、WindowsシステムとLinuxまたはMacシステムでは異なる方法で行われます。Windowsの場合、'-fullscreen'属性がTrueに設定されます。 Windowsの場合、 "root"の状態が "zoomed"に変更されます。フルスクリーンオプションを使用すると、タイトルバーが一部の場合に削除されるため、理由は異なります
+ |
+ |  minimize(self)
+ |      このウィンドウをタスクバーに最小化します
+
+  |  mouse_location(self)
+ |      マウスの位置（x、y座標）を画面全体に対する相対位置で返します。ウィンドウ、ポップアップなどを作成する際に使用する位置です。
+ |
+ |      :return: マウスポインタの位置
+ |      :rtype:  (int, int)
+ |
+ |  move(self, x, y)
+ |      このウィンドウの左上隅を指定されたx、y座標に移動します
+ |      :param x: ピクセル単位のx座標
+ |      :type x:  (int)
+ |      :param y: ピクセル単位のy座標
+ |      :type y:  (int)
+ |
+ |  move_to_center(self)
+ |      ウィンドウが移動したりサイズが変更された後にウィンドウを中央に再配置します。
+ |
+ |      これは便利なメソッドです。純粋なPySimpleGUI API呼び出しだけが含まれており、tkinter呼び出しはありません。
+ |
+ |  normal(self)
+ |      ウィンドウを最大化解除します。プラットフォームに応じて異なる動作をします。詳細はMaximizeを参照してください。
+ |
+ |  perform_long_operation(self, func, end_key)
+ |      長時間かかる関数を呼び出します。実行が完了すると、指定されたend_keyイベントを送信します。
+ |
+ |      あなたの代わりにスレッドを開始します。
+ |
+ |      これは、スレッドの詳細を学ぶことなくスレッディングに徐々に慣れるための方法です。
+ |      関数が実行されると、次の2つのことが起こります：
+ |      1. end_keyの値が関数が返したときにwindow.read()から返されます
+ |      2. 関数が値を返す場合、返された値もvaluesディクショナリ内のwindows.read呼び出しに含まれます
+ |
+ |      重要 - このメソッドはスレッドを使用します...これは関数内からWindow.write_event_valueを除くすべてのPySimpleGUI呼び出しを行うことはできないことを意味します。
+ |
+ |      :param func:    ラムダまたはパラムのない関数名
+ |      :type func:     Any
+ |      :param end_key: 関数が返されたときに生成されるキー
+ |      :type end_key:  (Any)
+ |      :return:        スレッドのID
+ |      :rtype:         threading.Thread
+ |
+ |  read(self, timeout=None, timeout_key='__TIMEOUT__', close=False)
+ |      Windowクラスで最も重要なメソッド！これはウィンドウからすべてのデータを取得する方法です。
+ |          最大timeoutミリ秒のタイムアウト（ミリ秒単位）を渡すと、timeoutミリ秒の間に他のGUIイベントが発生しない場合、timeout_keyを返します。
+ |
+ |      :param timeout:     タイムアウトが発生するまで待機するミリ秒単位の時間
+ |      :type timeout:      (int)
+ |      :param timeout_key: タイムアウト時に呼び出しに返される値
+ |      :type timeout_key:  (Any)
+ |      :param close:       Trueの場合、ウィンドウは返す前に閉じられます
+ |      :type close:        (bool)
+ |      :return:            (イベント、値)
+ |      :rtype:             Tuple[(Any), Dict[Any, Any], List[Any], None]
+ |
+ |  reappear(self)
+ |      以前に "消失" したウィンドウ（それを使用して）を "再表示" させます。これはアルファチャネルを復元することによって行われます
+ |
+ |  refresh(self)
+ |      tkroot.update()を呼び出すことでウィンドウを更新します。読み取りの代わりに更新を行う場合もあります。
+ |      この関数が呼び出されると、すぐに（関数が呼び出されたとき）ウィンドウに表示されるものを表示したい場合に使用します。
+ |      ウィンドウ内の要素を変更する場合、変更は次回のWindow.readの呼び出しまたはWindow.refreshの呼び出しまで表示されません。
+ |
+ |      :return: `self` これにより、メソッド呼び出しを簡単に「チェーン」できます
+ |      :rtype:  (Window)
+ |
+ |  save_to_disk(self, filename)
+ |      フォームの入力領域の各値を保存します。基本的にはReadの呼び出しから返されるものを保存します。それらの結果をpickleを使用してディスクに保存します。
+ |      保存するレイアウト内のすべての要素にキーが割り当てられている必要があることに注意してください。
+ |      
+ |      :param filename: ピクル形式で値を保存するためのファイル名
+ |      :type filename:  str
+ |
+ |  save_window_screenshot_to_disk(self, filename=None)
+ |      PySimpleGUIウィンドウの画像を指定されたファイル名に保存します
+ |
+ |      :param filename: スクリーンショットを保存するオプションのファイル名。含まれていない場合、ユーザーの設定がファイル名を取得するために使用されます
+ |      :return:         保存または操作可能なPIL ImageGrabオブジェクト
+ |      :rtype:          (PIL.ImageGrab | None)
+ |
+ |  send_to_back(self)
+ |      このウィンドウをウィンドウのスタックの一番下に移動します。これはBringToFrontの反対です
+ |
+ |  set_alpha(self, alpha)
+ |      ウィンドウのアルファチャネルを設定します。値は0から1の間で、0は完全に透明です
+ |
+ |      :param alpha: 0から1まで。0は完全に透明です。1は完全に見えて固定されています（透明では見えません）
+ |      :type alpha:  (float)
+ |
+ |  set_cursor(self, cursor)
+ |      ウィンドウのカーソルを設定します。
+ |      マウスポインタを表示したくない場合は、文字列 "none" を使用します
+ |
+ |      :param cursor: tkinterのカーソル名
+ |      :type cursor:  (str)
+
+  |  set_icon(self, icon=None, pngbase64=None)
+ |      ウィンドウのタイトルバーとタスクバーに表示されるアイコンを変更します。
+ |      注意 - ファイルの種類は重要で、OSに依存します！
+ |      以下を渡すことができます：
+ |      * ファイル名は、Windowsの場合は .ICO アイコンファイル、Linuxの場合は PNG ファイルである必要があります
+ |      * バイトオブジェクト
+ |      * 変数に格納されたBASE64エンコードされたファイル
+ |
+ |      :param icon:      ファイル名またはバイトオブジェクト
+ |      :type icon:       (str)
+ |      :param pngbase64: BASE64エンコードされたイメージ
+ |      :type pngbase64:  (bytes)
+ |
+ |  set_min_size(self, size)
+ |      ウィンドウの最小サイズを変更します。注意：ウィンドウは先に読み取るか最終化する必要があります。
+ |
+ |      :param size: ピクセル単位のウィンドウサイズの幅と高さのタプル（int、int）
+ |      :type size:  (int, int)
+ |
+ |  set_title(self, title)
+ |      ウィンドウのタイトルを変更します
+ |
+ |      :param title: タイトルに設定する文字列
+ |      :type title:  (str)
+ |
+ |  set_transparent_color(self, color)
+ |      ウィンドウで透明になる色を設定します。この色の領域は透明になります。
+ |
+ |      :param color: 透明な色を定義するカラー文字列
+ |      :type color:  (str)
+ |
+ |  start_thread = perform_long_operation(self, func, end_key)
+ |
+ |  un_hide(self)
+ |      Hideメソッドを使用して以前に非表示にされたウィンドウを表示するために使用されます
+ |
+ |  visibility_changed(self)
+ |      列内またはスクロールバーがある場所に要素を作成する場合、列のcontents_changed()メソッドの前にこの関数を呼び出す必要があります。
+ |
+ |  was_closed(self)
+ |      ウィンドウが閉じられた場合、Trueを返します
+ |
+ |      :return: ウィンドウが閉じられている場合はTrue
+ |      :rtype:  bool
+ |
+ |  widget_to_element(self, widget)
+ |      指定されたtkinterウィジェットに一致する要素を返します。
+ |      一致する要素が見つからない場合、Noneが返されます。
+ |
+ |
+ |      :return: 指定されたウィジェットを使用する要素
+ |      :rtype:  Element | None
+ |
+ |  write_event_value(self, key, value)
+ |      スレッドがウィンドウと通信するために使用されるキューにキーと値のタプルを追加します
+ |
+ |      :param key:   イベントが読み取られるときに返されるキー
+ |      :type key:    Any
+ |      :param value: valuesディクショナリに含まれる値
+ |      :type value:  Any
+ |
+ |  ----------------------------------------------------------------------
+ |  Class methods defined here:
+ |
+ |  get_screen_size() from builtins.type
+ |      これは「クラスメソッド」で、次のようにして呼び出します：width, height = Window.get_screen_size()
+ |      tkinterによって決定される「スクリーン」のサイズを返します。これは、オペレーティングシステムとシステムにインストールされているモニターの数に依存することがあります。Windowsの場合、プライマリモニターのサイズが返されます。一部の多モニターのLinuxシステムでは、モニターが結合され、1つの画面として報告されるため、合計サイズが1つの画面のように報告されます。
+ |
+ |      :return: tkinterによって決定された画面のサイズ（ピクセル単位）
+ |      :rtype:  (int, int)
+ |
+ |  ----------------------------------------------------------------------
+ |  Readonly properties defined here:
+ |
+ |  key_dict
+ |      すべてのキーとそれに対応する要素のディクショナリを返します
+ |      { key : Element }
+ |      :return: キーと要素のディクショナリ
+ |      :rtype:  Dict[Any, Element]
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  AlphaChannel
+ |      カレントアルファチャネル値（内部値）を変更するプロパティ
+ |      :return: selfによって設定された現在のアルファチャネル設定（直接tkinterから読み取られない）
+ |      :rtype:  (float)
+ |
+ |  Size
+ |      ウィンドウの現在のサイズをピクセル単位で返します
+ |
+ |      :return: ウィンドウの（幅、高さ）サイズ
+ |      :rtype:  Tuple[(int), (int)]またはTuple[None, None]
+ |
+ |  __dict__
+ |      インスタンス変数用の辞書（定義されている場合）
+ |
+ |  __weakref__
+ |      オブジェクトへの弱い参照のリスト（定義されている場合）
+ |
+ |  alpha_channel
+ |      カレントアルファチャネル値（内部値）を変更するプロパティ
+ |      :return: selfによって設定された現在のアルファチャネル設定（直接tkinterから読み取られない）
+ |      :rtype:  (float)
+ |
+ |  metadata
+ |      メタデータはすべてのウィンドウで使用できます。任意の値を設定できます。
+ |      :return: 現在のメタデータ値
+ |
+ |  hidden_master_root = None
