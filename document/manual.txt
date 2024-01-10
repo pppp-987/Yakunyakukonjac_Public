@@ -11,23 +11,14 @@
     インストーラー の実行
         インストーラーがダウンロードされた場所に作成
 
-3. 実行ファイルがあるフォルダを開く
-    非公開版(テスト用)
-        venv_YakunyakuKonjac\YakunyakuKonjac\toolsを開く
-    公開版
-        venv_YakunyakuKonjac\YakunyakuKonjac_Public\toolsを開く
+3. アプリの実行
+    YakunyakuKonjac.lnkの実行
 
-4. AWSの設定(初回のみ)
-    aws.batの実行
-
-4. アプリの実行
-    app.batの実行
-
-履歴の削除
-    delete_history.batの実行
-
-設定のリセット
-    reset_setting.batの実行
+    YakunyakuKonjac.lnkを使用しない場合
+        非公開版(テスト用)
+            venv_YakunyakuKonjac\YakunyakuKonjac\tools\app.batの実行
+        公開版
+            venv_YakunyakuKonjac\YakunyakuKonjac_Public\tools\app.batの実行
 
 更新方法
     1 . プロジェクトフォルダへの移動

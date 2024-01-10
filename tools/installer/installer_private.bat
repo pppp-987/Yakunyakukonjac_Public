@@ -1,81 +1,81 @@
-@REM ƒtƒ@ƒCƒ‹•Û‘¶Žž‚ÉAƒGƒ“ƒR[ƒfƒBƒ“ƒO‚ð"Shift-JIS"‚É‚·‚é
+@REM ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ÉAï¿½Gï¿½ï¿½ï¿½Rï¿½[ï¿½fï¿½Bï¿½ï¿½ï¿½Oï¿½ï¿½"Shift-JIS"ï¿½É‚ï¿½ï¿½ï¿½
 
-@REM ƒRƒ}ƒ“ƒh‚ð•\Ž¦‚µ‚È‚¢
+@REM ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
 @REM @echo off
 
-@REM •¶ŽšƒR[ƒh‚ð"Shift-JIS"‚ÉÝ’è ƒƒbƒZ[ƒW‚Í”ñ•\Ž¦
+@REM ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½[ï¿½hï¿½ï¿½"Shift-JIS"ï¿½ÉÝ’ï¿½ ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½Í”ï¿½\ï¿½ï¿½
 chcp 932 >nul
 
-@REM ‰¼‘zŠÂ‹«ì¬
+@REM ï¿½ï¿½ï¿½zï¿½Â‹ï¿½ï¿½ì¬
 py -3.8 -m venv venv_YakunyakuKonjac
 cd venv_YakunyakuKonjac
 call Scripts\activate.bat
 
-@REM ƒpƒbƒP[ƒWƒCƒ“ƒXƒg[ƒ‹ ƒ^ƒCƒ€ƒAƒEƒg‚ð100•b‚É•ÏX
+@REM ï¿½pï¿½bï¿½Pï¿½[ï¿½Wï¿½Cï¿½ï¿½ï¿½Xï¿½gï¿½[ï¿½ï¿½ ï¿½^ï¿½Cï¿½ï¿½ï¿½Aï¿½Eï¿½gï¿½ï¿½100ï¿½bï¿½É•ÏX
 
-@REM AWSŠÖ˜A
+@REM AWSï¿½Ö˜A
 pip --default-timeout=100 install awscli
 pip --default-timeout=100 install boto3
-@REM OCRŠÖ˜A
+@REM OCRï¿½Ö˜A
 pip --default-timeout=100 install easyocr
-@REM –|–óŠÖ˜A
+@REM ï¿½|ï¿½ï¿½Ö˜A
 pip --default-timeout=100 install deep-translator
-@REM GUIŠÖ˜A
+@REM GUIï¿½Ö˜A
 pip --default-timeout=100 install keyboard
 pip --default-timeout=100 install pyautogui
 pip --default-timeout=100 install PySimpleGUI
 
-@REM ƒpƒbƒP[ƒWˆê——o—Íƒtƒ@ƒCƒ‹‚Ìì¬
+@REM ï¿½pï¿½bï¿½Pï¿½[ï¿½Wï¿½ê——ï¿½oï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½Ìì¬
 pip freeze > requirements.txt
 
-@REM git‚©‚çƒNƒ[ƒ“
-git clone https://github.com/pppp-987/YakunyakuKonjac_Public.git
+@REM gitï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½
+git clone https://github.com/pppp-987/Yakunyakukonjac_Public.git
 
-@REM ƒvƒƒWƒFƒNƒgƒtƒ@ƒCƒ‹‚ÉˆÚ“®
-cd YakunyakuKonjac_Public
+@REM ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½gï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ÉˆÚ“ï¿½
+cd Yakunyakukonjac_Public
 
-@REM ƒuƒ‰ƒ“ƒ`•ÏX
+@REM ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½ÏX
 git checkout environment
 
-@REM ƒVƒ‡[ƒgƒJƒbƒgì¬ VBScriptŽg—p
+@REM ï¿½Vï¿½ï¿½ï¿½[ï¿½gï¿½Jï¿½bï¿½gï¿½ì¬ VBScriptï¿½gï¿½p
 
-@REM ƒVƒ‡[ƒgƒJƒbƒg‚ÌƒŠƒ“ƒNæƒpƒX
-set ShortcutPath="%~dp0\app.lnk"
+@REM ï¿½Vï¿½ï¿½ï¿½[ï¿½gï¿½Jï¿½bï¿½gï¿½Ìƒï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½pï¿½X
+set ShortcutPath="%~dp0\YakunyakuKonjac.lnk"
 
-@REM ƒVƒ‡[ƒgƒJƒbƒg‚Ì•Û‘¶æƒpƒX
+@REM ï¿½Vï¿½ï¿½ï¿½[ï¿½gï¿½Jï¿½bï¿½gï¿½Ì•Û‘ï¿½ï¿½ï¿½pï¿½X
 set TargetPath="%cd%\tools\app.bat"
 
-@REM ƒVƒ‡[ƒgƒJƒbƒg‚ÌƒAƒCƒRƒ“‚ÌƒpƒX
+@REM ï¿½Vï¿½ï¿½ï¿½[ï¿½gï¿½Jï¿½bï¿½gï¿½ÌƒAï¿½Cï¿½Rï¿½ï¿½ï¿½Ìƒpï¿½X
 set ShortcutIconPath="%cd%\static\icon\app.ico"
 
-@REM ì‹ÆƒtƒHƒ‹ƒ_‚ÌƒpƒX
+@REM ï¿½ï¿½Æƒtï¿½Hï¿½ï¿½ï¿½_ï¿½Ìƒpï¿½X
 set WorkingDirectoryPath="%cd%\tools"
 
-@REM ˆêŽž“I‚ÈVBScriptƒtƒ@ƒCƒ‹‚Ìì¬
+@REM ï¿½êŽžï¿½Iï¿½ï¿½VBScriptï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ìì¬
 copy nul CreateShortcut.vbs
 
-@REM WScript.ShellƒIƒuƒWƒFƒNƒg‚Ìì¬
+@REM WScript.Shellï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Ìì¬
 echo Set WScriptShell = WScript.CreateObject("WScript.Shell") >> CreateShortcut.vbs
 
-@REM ƒVƒ‡[ƒgƒJƒbƒg‚Ìì¬
+@REM ï¿½Vï¿½ï¿½ï¿½[ï¿½gï¿½Jï¿½bï¿½gï¿½Ìì¬
 echo Set Shortcut = WScriptShell.CreateShortcut(%ShortcutPath%) >> CreateShortcut.vbs
 
-@REM ƒVƒ‡[ƒgƒJƒbƒg‚ÌƒŠƒ“ƒNæƒpƒX‚ÌÝ’è
+@REM ï¿½Vï¿½ï¿½ï¿½[ï¿½gï¿½Jï¿½bï¿½gï¿½Ìƒï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½pï¿½Xï¿½ÌÝ’ï¿½
 echo Shortcut.TargetPath = %TargetPath% >> CreateShortcut.vbs
 
-@REM ì‹ÆƒtƒHƒ‹ƒ_‚ÌÝ’è
+@REM ï¿½ï¿½Æƒtï¿½Hï¿½ï¿½ï¿½_ï¿½ÌÝ’ï¿½
 echo Shortcut.WorkingDirectory = %WorkingDirectoryPath% >> CreateShortcut.vbs
 
-@REM ƒVƒ‡[ƒgƒJƒbƒgƒAƒCƒRƒ“‚ÌÝ’è
+@REM ï¿½Vï¿½ï¿½ï¿½[ï¿½gï¿½Jï¿½bï¿½gï¿½Aï¿½Cï¿½Rï¿½ï¿½ï¿½ÌÝ’ï¿½
 echo Shortcut.IconLocation = %ShortcutIconPath% >> CreateShortcut.vbs
 
-@REM ƒVƒ‡[ƒgƒJƒbƒg‚ð•Û‘¶
+@REM ï¿½Vï¿½ï¿½ï¿½[ï¿½gï¿½Jï¿½bï¿½gï¿½ï¿½Û‘ï¿½
 echo Shortcut.Save >> CreateShortcut.vbs
 
-@REM VBSƒtƒ@ƒCƒ‹‚ðŽÀs‚µ‚ÄƒVƒ‡[ƒgƒJƒbƒg‚ðì¬
+@REM VBSï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ÄƒVï¿½ï¿½ï¿½[ï¿½gï¿½Jï¿½bï¿½gï¿½ï¿½ï¿½ì¬
 cscript CreateShortcut.vbs
 
-@REM ˆêŽž“I‚Éì¬‚µ‚½VBSƒtƒ@ƒCƒ‹‚ðíœ
+@REM ï¿½êŽžï¿½Iï¿½Éì¬ï¿½ï¿½ï¿½ï¿½VBSï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½íœ
 del CreateShortcut.vbs
 
-msg * ƒCƒ“ƒXƒg[ƒ‹‚ªŠ®—¹‚µ‚Ü‚µ‚½
+msg * ï¿½Cï¿½ï¿½ï¿½Xï¿½gï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½

@@ -5,6 +5,7 @@ import PySimpleGUI as sg  # GUI
 from package.error_log import ErrorLog  # エラーログに関するクラス
 from package.fn import Fn  # 自作関数クラス
 from package.global_status import GlobalStatus  # グローバル変数保存用のクラス
+from package.system_setting import SystemSetting  # ユーザーが変更不可の設定クラス
 from package.user_setting import UserSetting  # ユーザーが変更可能の設定クラス
 
 
@@ -39,31 +40,44 @@ class BaseWin:
         Returns:
             window(sg.Window): GUIウィンドウ設定
         """
+        #  基本となるGUIウィンドウで設定する引数の辞書の取得
+        window_args = self.get_base_window_args()
 
-        # ウィンドウの位置とサイズの取得
+        # ウィンドウの位置の取得
         window_left_x = self.user_setting.get_setting("window_left_x")
         window_top_y = self.user_setting.get_setting("window_top_y")
 
-        # GUIウィンドウ設定の引数の辞書
-        window_args = {
+        # ウィンドウ位置が指定されている場合
+        if (window_left_x is not None) and (window_top_y is not None):
+            # 翻訳画面の座標位置から少し右下にずらす（設定画面用）
+            window_args["location"] = (window_left_x + 50, window_top_y + 50)
+
+        # GUIウィンドウ設定
+        window = sg.Window(**window_args)
+
+        return window  # GUIウィンドウ設定
+
+    def get_base_window_args(self):
+        """基本となるGUIウィンドウで設定する引数の辞書の取得
+
+        Returns:
+            base_window_args(dict(key:str, any)): 基本となるGUIウィンドウで設定する引数の辞書
+        """
+        # 基本となるGUIウィンドウで設定する引数の辞書
+        base_window_args = {
             "title": "ヤクニャクコンジャック",  # ウィンドウタイトル
             "layout": self.get_layout(),  # レイアウト指定
             "resizable": True,  # ウィンドウサイズ変更可能
             "finalize": True,  # 入力待ち までの間にウィンドウを表示する
             "enable_close_attempted_event": True,  # タイトルバーの[X]ボタン押下,Alt+F4時にイベントが返される
+            "icon": SystemSetting.app_icon_file_path, # アイコの設定
             # メタデータ
             "metadata": {
                 "is_exit": False,  # ウィンドウを閉じるかどうか
             },
         }
-
-        # ウィンドウ位置が指定されている場合
-        if (window_left_x is not None) and (window_top_y is not None):
-            window_args["location"] = (window_left_x + 50, window_top_y + 50)
-        # GUIウィンドウ設定
-        window = sg.Window(**window_args)
-
-        return window  # GUIウィンドウ設定
+        # 基本となるGUIウィンドウで設定する引数の辞書
+        return base_window_args
 
     def event_start(self):
         """イベント受付開始処理

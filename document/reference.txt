@@ -180,8 +180,8 @@ Python関連
         アイコン (設計の基本)
         https://learn.microsoft.com/ja-jp/windows/win32/uxguide/vis-icons
 
-contents_changed
-
+        Windows/バッチで多重起動防止
+        https://qiita.com/sasaki_hir/items/413127e523dbe2b21c74
 
 その他
 

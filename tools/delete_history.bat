@@ -1,19 +1,19 @@
-@REM ƒtƒ@ƒCƒ‹•Û‘¶Žž‚ÉAƒGƒ“ƒR[ƒfƒBƒ“ƒO‚ð"Shift-JIS"‚É‚·‚é
+@REM ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ÉAï¿½Gï¿½ï¿½ï¿½Rï¿½[ï¿½fï¿½Bï¿½ï¿½ï¿½Oï¿½ï¿½"Shift-JIS"ï¿½É‚ï¿½ï¿½ï¿½
 
-@REM ƒRƒ}ƒ“ƒh‚ð•\Ž¦‚µ‚È‚¢
+@REM ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
 @echo off
 
-@REM •¶ŽšƒR[ƒh‚ð"Shift-JIS"‚ÉÝ’è ƒƒbƒZ[ƒW‚Í”ñ•\Ž¦
+@REM ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½[ï¿½hï¿½ï¿½"Shift-JIS"ï¿½ÉÝ’ï¿½ ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½Í”ï¿½\ï¿½ï¿½
 chcp 932 >nul
 
-@REM ‰¼‘zŠÂ‹«‚ª—LŒø‚Å‚È‚¢‚È‚ç
+@REM ï¿½ï¿½ï¿½zï¿½Â‹ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½È‚ï¿½
 if not defined VIRTUAL_ENV (
-    @REM ‰¼‘zŠÂ‹«‚Ìƒ‹[ƒgƒfƒBƒŒƒNƒgƒŠ‚ÖˆÚ“®
+    @REM ï¿½ï¿½ï¿½zï¿½Â‹ï¿½ï¿½Ìƒï¿½ï¿½[ï¿½gï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ÖˆÚ“ï¿½
     cd ../..
-    @REM ‰¼‘zŠÂ‹«‚Ì—LŒø‰»
+    @REM ï¿½ï¿½ï¿½zï¿½Â‹ï¿½ï¿½Ì—Lï¿½ï¿½ï¿½ï¿½
     call Scripts\activate.bat
 )
 
-@REM —š—ð‚Ìíœ
-del /Q YakunyakuKonjac_Public\src\history\image_after\*.png 2>nul
-del /Q YakunyakuKonjac_Public\src\history\image_before\*.png 2>nul
+@REM ï¿½ï¿½ï¿½ï¿½ï¿½Ìíœ
+del /Q Yakunyakukonjac_Public\src\history\image_after\*.png 2>nul
+del /Q Yakunyakukonjac_Public\src\history\image_before\*.png 2>nul

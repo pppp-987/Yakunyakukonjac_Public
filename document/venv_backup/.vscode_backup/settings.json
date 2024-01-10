@@ -23,5 +23,11 @@
     // isortの引数を設定する(blackフォーマッターに従う、119文字)
     "isort.args":["--profile", "black","--line-length=119"],
     // デフォルトのターミナルを設定する（コマンドプロンプト（cmd.exe））
-    "terminal.integrated.defaultProfile.windows": "Command Prompt"
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+
+    // batの設定
+    "[bat]": {
+        // デフォルトエンコードをShift-JISに変更
+        "files.encoding": "shiftjis"
+    }
 }

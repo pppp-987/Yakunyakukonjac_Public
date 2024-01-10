@@ -81,22 +81,12 @@ class ThemeSettingWin(BaseWin):
         Returns:
             window(sg.Window): GUIウィンドウ設定
         """
-
-        # GUIウィンドウ設定の引数の辞書
-        window_args = {
-            "title": "ヤクニャクコンジャック",  # ウィンドウタイトル
-            "layout": self.get_layout(),  # レイアウト指定
-            "resizable": True,  # ウィンドウサイズ変更可能
-            "finalize": True,  # 入力待ち までの間にウィンドウを表示する
-            "enable_close_attempted_event": True,  # タイトルバーの[X]ボタン押下,Alt+F4時にイベントが返される
-            # メタデータ
-            "metadata": {
-                "is_exit": False,  # ウィンドウを閉じるかどうか
-            },
-        }
+        #  基本となるGUIウィンドウで設定する引数の辞書の取得
+        window_args = self.get_base_window_args()
 
         # ウィンドウ位置が指定されている場合
         if (self.window_left_x is not None) and (self.window_top_y is not None):
+            # 座標位置に画面を表示する
             window_args["location"] = (self.window_left_x, self.window_top_y)
 
         # GUIウィンドウ設定

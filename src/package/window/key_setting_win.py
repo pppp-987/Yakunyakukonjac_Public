@@ -87,29 +87,21 @@ class KeySettingWin(BaseWin):
         Returns:
             window(sg.Window): GUIウィンドウ設定
         """
+        #  基本となるGUIウィンドウで設定する引数の辞書の取得
+        window_args = self.get_base_window_args()
+        # メタデータの追加
+        window_args["metadata"]["is_key_input_waiting_state"] = False  # キー入力待ち状態かどうか
+        window_args["metadata"]["is_key_input_waiting_event"] = None  # キー入力待ち状態のイベント名
 
-        # ウィンドウの位置とサイズの取得
+        # ウィンドウの位置の取得
         window_left_x = self.user_setting.get_setting("window_left_x")
         window_top_y = self.user_setting.get_setting("window_top_y")
 
-        # GUIウィンドウ設定の引数の辞書
-        window_args = {
-            "title": "ヤクニャクコンジャック",  # ウィンドウタイトル
-            "layout": self.get_layout(),  # レイアウト指定
-            "resizable": True,  # ウィンドウサイズ変更可能
-            "finalize": True,  # 入力待ち までの間にウィンドウを表示する
-            "enable_close_attempted_event": True,  # タイトルバーの[X]ボタン押下,Alt+F4時にイベントが返される
-            # メタデータ
-            "metadata": {
-                "is_exit": False,  # ウィンドウを閉じるかどうか
-                "is_key_input_waiting_state": False,  # キー入力待ち状態かどうか
-                "is_key_input_waiting_event": None,  # キー入力待ち状態のイベント名
-            },
-        }
-
         # ウィンドウ位置が指定されている場合
         if (window_left_x is not None) and (window_top_y is not None):
+            # 翻訳画面の座標位置から少し右下にずらす（設定画面用）
             window_args["location"] = (window_left_x + 50, window_top_y + 50)
+
         # GUIウィンドウ設定
         window = sg.Window(**window_args)
 

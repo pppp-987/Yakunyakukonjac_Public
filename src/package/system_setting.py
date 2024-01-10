@@ -53,7 +53,7 @@ class SystemSetting:
     # Malgun Gothic のパス ハングルフォント
     font_MalgunGothic_path = os.path.join(font_path, "malgun.ttf")
 
-    # 画像ファイル保存先設定
+    # 画像ファイルが格納されるディレクトリのパス
     image_path = os.path.join(static_path, "image")
     # OCRの動作チェックに使用する画像ファイルのパス
     check_ocr_image_path = os.path.join(image_path, "check_ocr.png")
@@ -61,6 +61,11 @@ class SystemSetting:
     default_image_before_path = os.path.join(image_path, "default_image_before.png")
     # デフォルトの翻訳後画像ファイルのパス
     default_image_after_path = os.path.join(image_path, "default_image_after.png")
+
+    # アイコン画像ファイルが格納されるディレクトリのパス
+    icon_path = os.path.join(static_path, "icon")
+    # アプリケーションのアイコン画像ファイルのパス
+    app_icon_file_path = os.path.join(icon_path, "app.ico")
 
     # プロジェクトに関連するスクリプトが格納されるディレクトリのパス
     tool_path = os.path.join(project_path, "tools")

@@ -30,11 +30,12 @@ window = sg.Window(
     grab_anywhere=True,
     #  Trueの場合、キーボードのキー操作がRead呼び出しからイベントとして返されます
     return_keyboard_events=True,
+    icon="C:\\Users\\student\\Documents\\venv_YakunyakuKonjac\\Yakunyakukonjac\\static\\icon\\app.ico",
     # no_titlebar=True,
     # disable_close=True,
     # Trueの場合、ウィンドウは画面上のすべての他のウィンドウの上に作成されます。このパラメータを使用して別のパラメータで作成されたウィンドウが下に押しやられる可能性があります
-    keep_on_top=True,
-    use_custom_titlebar=True,
+    # keep_on_top=True,
+    # use_custom_titlebar=True,
     # Trueの場合、ウィンドウは「X」をクリックして閉じられません。代わりに、window.readからWINDOW_CLOSE_ATTEMPTED_EVENTが返されます
     # enable_close_attempted_event = True
 )
